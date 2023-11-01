@@ -45,5 +45,13 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
+    'react/destructuring-assignment': 'off',
+    'max-classes-per-file': 'off',
+    'react/prefer-stateless-function': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'react/no-did-update-set-state': 'off',
+    'no-console': 'off',
+    'class-methods-use-this': 'off',
   },
 };
