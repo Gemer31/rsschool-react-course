@@ -1,27 +1,41 @@
 import './Search.scss';
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import LOCAL_STORAGE_SEARCH_VALUE from '../../constants/common.constant';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { setSearchValue } from '../../store/slices/searchSlice';
+import {
+  fetchOrganizationDetails,
+  fetchOrganizations,
+  fetchSearch,
+} from '../../store/reducers/ActionCreators';
 
-export interface ISearchProps {
-  updateItemsCallback?: (newSearchValue: string) => void;
-  searchValue?: string;
-}
+export function Search() {
+  const searchValue = useAppSelector((state) => state.search.value);
+  const dispatch = useAppDispatch();
+  const input = useRef();
+  const pageState = useAppSelector((state) => state.currentPage);
 
-export function Search({ updateItemsCallback, searchValue }: ISearchProps) {
-  const [search, setSearch] = useState<string>('');
+  useEffect(() => {
+    input.current.value = searchValue;
+  }, []);
 
-  useEffect(() => setSearch(searchValue), [searchValue]);
+  const searchClick = (newValue: string): void => {
+    localStorage.setItem(LOCAL_STORAGE_SEARCH_VALUE, newValue);
+    dispatch(setSearchValue(newValue));
+    dispatch(
+      newValue
+        ? fetchSearch(newValue)
+        : fetchOrganizations(pageState.pageNumber, pageState.pageSize)
+    );
+  };
 
   return (
     <form className="search__form">
       <input
+        ref={input}
         role="search-input"
         type="text"
         className="search__form__input"
-        onInput={(event: FormEvent) =>
-          setSearch((event.target as HTMLInputElement).value)
-        }
-        value={search}
         placeholder="Type UID. Example: ORMA0000278954"
       />
       <button
@@ -30,8 +44,7 @@ export function Search({ updateItemsCallback, searchValue }: ISearchProps) {
         className="search__form__button button"
         onClick={(event) => {
           event.preventDefault();
-          localStorage.setItem(LOCAL_STORAGE_SEARCH_VALUE, search);
-          updateItemsCallback(search);
+          searchClick(input.current.value);
         }}
       >
         Search

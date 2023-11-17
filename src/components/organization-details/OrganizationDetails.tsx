@@ -1,39 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { NavLink, useSearchParams } from 'react-router-dom';
 import './OrganizationDetails.scss';
-import organizationApi from '../../api/organization.api';
 import { Loader, LoaderColor } from '../loader/Loader';
-import { IOrganization } from '../../models/organization.model';
-import { useStorage } from '../../context/StorageContext';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { fetchOrganizationDetails } from '../../store/reducers/ActionCreators';
 
 export default function OrganizationDetails() {
-  const { getDetails, setDetails } = useStorage();
   const [searchParams] = useSearchParams();
-  const [loading, setLoading] = useState(true);
-  const [organization, setOrganization] = useState(null);
-  const id = searchParams.get('uid');
+  let id = searchParams.get('uid');
+
+  const dispatch = useAppDispatch();
+  const details = useAppSelector(
+    (state) => state.organizationDetails.details[id]
+  );
+  const isLoading = useAppSelector(
+    (state) => state.organizationDetails.isLoading
+  );
 
   useEffect(() => {
     if (id) {
-      setLoading(true);
-      try {
-        const detailsItem: IOrganization = getDetails(id);
-        (detailsItem
-          ? Promise.resolve(detailsItem)
-          : organizationApi.getDetails(id)
-        )
-          .then((response: IOrganization) => {
-            if (response) {
-              setOrganization(response);
-              !detailsItem && setDetails(id, response);
-            } else {
-              throw new Error(`Can not find organization with uid=${id}`);
-            }
-          })
-          .finally(() => setLoading(false));
-      } catch {
-        throw new Error(`Can not find organization with uid=${id}`);
-      }
+      dispatch(fetchOrganizationDetails(id));
     }
   }, [id]);
 
@@ -57,11 +43,11 @@ export default function OrganizationDetails() {
   return (
     <article
       role="organization-details"
-      className={'organization-details' + (loading ? ' _loading' : '')}
+      className={'organization-details' + (isLoading ? ' _loading' : '')}
     >
-      {loading ? (
+      {isLoading ? (
         <Loader color={LoaderColor.SALMON} />
-      ) : (
+      ) : details ? (
         <>
           <NavLink
             role="organization-details-close-button"
@@ -72,29 +58,31 @@ export default function OrganizationDetails() {
             role="organization-details-title"
             className="organization-details__title"
           >
-            {organization.name}
+            {details.name}
           </div>
           <div className="organization-details__info">
-            {Object.keys(organization).map((dataKey: string) =>
+            {Object.keys(details).map((dataKey: string) =>
               ['uid', 'name'].includes(dataKey) ? (
                 ''
               ) : (
-                <div role="details-param" key={organization.uid + dataKey}>
+                <div role="details-param" key={details.uid + dataKey}>
                   {convertKeyToInfoFormat(dataKey)}-
                   <span
                     role="detailsValue"
                     className={
                       'organization-details__info' +
-                      (organization[dataKey] ? '-true' : '-false')
+                      (details[dataKey] ? '-true' : '-false')
                     }
                   >
-                    {organization[dataKey] ? 'Yes' : 'No'}
+                    {details[dataKey] ? 'Yes' : 'No'}
                   </span>
                 </div>
               )
             )}
           </div>
         </>
+      ) : (
+        <></>
       )}
     </article>
   );
