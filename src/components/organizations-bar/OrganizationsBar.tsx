@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { OrganizationsList } from '../organizations-list/OrganizationsList';
-import { PagesBar } from '../pages-bar/PagesBar';
 import './OrganizationsBar.scss';
-import { Search } from '../search/Search';
+import Search from '../search/Search';
+import PagesBar from '../pages-bar/PagesBar';
 
 export default function OrganizationsBar() {
   const [boundaryError, setBoundaryError] = useState(false);

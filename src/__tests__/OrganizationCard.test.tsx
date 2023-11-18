@@ -5,11 +5,11 @@ import {
   MemoryRouter,
   RouterProvider,
 } from 'react-router-dom';
-import { OrganizationsList } from '../components/organizations-list/OrganizationsList';
 import { routerConfig } from '../App';
 import organizationApi from '../api/organization.api';
 import mockDetails from './mock/mock-details';
 import mockOrganizations from './mock/mock-organizations';
+import OrganizationsList from '../components/organizations-list/OrganizationsList';
 
 describe('Card component', () => {
   beforeAll(() => {

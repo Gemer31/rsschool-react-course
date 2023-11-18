@@ -3,28 +3,28 @@ import { NavLink, useSearchParams } from 'react-router-dom';
 import './OrganizationDetails.scss';
 import { Loader, LoaderColor } from '../loader/Loader';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { useFetchOrganizationDetailsQuery } from "../../services/OrganizationService";
-import { setDetailsUID, setOrganizationDetails } from "../../store/slices/organizationDetailsSlice";
+import { useFetchOrganizationDetailsQuery } from '../../services/OrganizationService';
+import {
+  setDetailsUID,
+  setOrganizationDetails,
+} from '../../store/slices/organizationDetailsSlice';
 
 export default function OrganizationDetails() {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
-  const uid = useAppSelector(state => state.organizationDetails.currentUID);
+  const uid = useAppSelector((state) => state.organizationDetails.currentUID);
   const details = useAppSelector(
-      (state) => state.organizationDetails.details[uid]
+    (state) => state.organizationDetails.details[uid]
   );
 
-  const {
-    data,
-    isFetching,
-  } = useFetchOrganizationDetailsQuery(uid);
+  const { data, isFetching } = useFetchOrganizationDetailsQuery(uid);
 
   useEffect(() => {
-    dispatch(setDetailsUID(searchParams.get('uid')))
+    dispatch(setDetailsUID(searchParams.get('uid')));
   }, []);
 
   useEffect(() => {
-    data && dispatch(setOrganizationDetails({uid, data: data.organization}));
+    data && dispatch(setOrganizationDetails({ uid, data: data.organization }));
   }, [data]);
 
   const convertKeyToInfoFormat = (key: string): string => {

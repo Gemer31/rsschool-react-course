@@ -13,12 +13,10 @@ export const organizationsSlice = createSlice<IOrganizationsState>({
     page: {},
   },
   reducers: {
-    setOrganizations(
-      state,
-      action: PayloadAction<IOrganizationsResponse>
-    ) {
+    setOrganizations(state, action: PayloadAction<IOrganizationsResponse>) {
       if (action.payload) {
-        state.page[action.payload.page.pageNumber] = action.payload.organizations;
+        state.page[action.payload.page.pageNumber] =
+          action.payload.organizations;
       } else {
         state.page = {};
       }
@@ -26,6 +24,4 @@ export const organizationsSlice = createSlice<IOrganizationsState>({
   },
 });
 
-export const {
-  setOrganizations,
-} = organizationsSlice.actions;
+export const { setOrganizations } = organizationsSlice.actions;

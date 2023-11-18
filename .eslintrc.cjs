@@ -60,5 +60,7 @@ module.exports = {
     'no-nested-ternary': 'off',
     'jsx-a11y/aria-role': 'off',
     'react/jsx-no-constructed-context-values': 'off',
+    'no-param-reassign': 'off',
+    'react/jsx-no-useless-fragment': 'off',
   },
 };

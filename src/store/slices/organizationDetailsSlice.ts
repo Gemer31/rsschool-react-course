@@ -21,16 +21,11 @@ export const organizationDetailsSlice = createSlice<IOrganizationDetailsState>({
       state.isLoading = false;
       state.details[action.payload.uid] = action.payload.data;
     },
-    setDetailsUID(
-        state,
-        action: PayloadAction<string>
-    ) {
+    setDetailsUID(state, action: PayloadAction<string>) {
       state.currentUID = action.payload;
-    }
+    },
   },
 });
 
-export const {
-  setOrganizationDetails,
-    setDetailsUID,
-} = organizationDetailsSlice.actions;
+export const { setOrganizationDetails, setDetailsUID } =
+  organizationDetailsSlice.actions;

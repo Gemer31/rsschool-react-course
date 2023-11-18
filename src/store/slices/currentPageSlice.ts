@@ -4,7 +4,9 @@ import { IPage } from '../../models/organization.model';
 export const currentPageSlice = createSlice<IPage>({
   name: 'currentPage',
   initialState: {
-    pageNumber: Number(new URLSearchParams(document.location.search).get('pageNumber')) || 1,
+    pageNumber:
+      Number(new URLSearchParams(document.location.search).get('pageNumber')) ||
+      1,
     pageSize:
       Number(new URLSearchParams(document.location.search).get('pageSize')) ||
       10,

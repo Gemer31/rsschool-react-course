@@ -3,9 +3,9 @@ import { useEffect, useRef } from 'react';
 import LOCAL_STORAGE_SEARCH_VALUE from '../../constants/common.constant';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setSearchValue } from '../../store/slices/searchSlice';
-import { setPageData } from "../../store/slices/currentPageSlice";
+import { setPageData } from '../../store/slices/currentPageSlice';
 
-export function Search() {
+export default function Search() {
   const searchValue = useAppSelector((state) => state.search.value);
   const dispatch = useAppDispatch();
   const input = useRef();
@@ -15,15 +15,15 @@ export function Search() {
   }, []);
 
   const searchClick = (newValue: string): void => {
-      localStorage.setItem(LOCAL_STORAGE_SEARCH_VALUE, newValue);
-      dispatch(setSearchValue(newValue));
-      dispatch(
-          setPageData({
-              pageNumber: 1,
-              firstPage: true,
-              lastPage: true,
-          })
-      );
+    localStorage.setItem(LOCAL_STORAGE_SEARCH_VALUE, newValue);
+    dispatch(setSearchValue(newValue));
+    dispatch(
+      setPageData({
+        pageNumber: 1,
+        firstPage: true,
+        lastPage: true,
+      })
+    );
   };
 
   return (

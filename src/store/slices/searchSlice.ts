@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import LOCAL_STORAGE_SEARCH_VALUE from '../../constants/common.constant';
-import { IOrganization, IOrganizationsResponse } from "../../models/organization.model";
+import { IOrganization } from '../../models/organization.model';
 
 interface ISearchState {
   value: string;
@@ -14,10 +14,10 @@ export const searchSlice = createSlice<ISearchState>({
     result: null,
   },
   reducers: {
-    setSearchValue(state, action: PayloadAction<string>) {
+    setSearchValue(state: ISearchState, action: PayloadAction<string>) {
       state.value = action.payload;
     },
-    setSearchResult(state, action: PayloadAction<IOrganization>) {
+    setSearchResult(state: ISearchState, action: PayloadAction<IOrganization>) {
       state.result = action.payload;
     },
   },
