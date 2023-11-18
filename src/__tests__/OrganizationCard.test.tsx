@@ -6,7 +6,6 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { routerConfig } from '../App';
-import organizationApi from '../api/organization.api';
 import mockDetails from './mock/mock-details';
 import mockOrganizations from './mock/mock-organizations';
 import OrganizationsList from '../components/organizations-list/OrganizationsList';
@@ -28,10 +27,7 @@ describe('Card component', () => {
   it('Ensure that the card component renders the relevant card data', async () => {
     render(
       <MemoryRouter>
-        <OrganizationsList
-          loading={false}
-          items={mockOrganizations.organizations}
-        />
+        <OrganizationsList/>
       </MemoryRouter>
     );
     const itemsElements = await screen.findAllByRole('organization-list-item');
