@@ -5,34 +5,27 @@ interface IOrganizationsState {
   page: {
     [pageNumber: string]: unknown;
   };
-  isLoading: boolean;
 }
 
 export const organizationsSlice = createSlice<IOrganizationsState>({
   name: 'organizations',
   initialState: {
     page: {},
-    isLoading: false,
   },
   reducers: {
-    organizationsFetching(state) {
-      state.isLoading = true;
-    },
-    organizationsFetchingSuccess(
+    setOrganizations(
       state,
       action: PayloadAction<IOrganizationsResponse>
     ) {
-      state.isLoading = false;
-      state.page[action.payload.page.pageNumber] = action.payload.organizations;
-    },
-    organizationsFetchingError(state) {
-      state.isLoading = false;
+      if (action.payload) {
+        state.page[action.payload.page.pageNumber] = action.payload.organizations;
+      } else {
+        state.page = {};
+      }
     },
   },
 });
 
 export const {
-  organizationsFetching,
-  organizationsFetchingSuccess,
-  organizationsFetchingError,
+  setOrganizations,
 } = organizationsSlice.actions;

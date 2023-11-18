@@ -3,30 +3,27 @@ import { useEffect, useRef } from 'react';
 import LOCAL_STORAGE_SEARCH_VALUE from '../../constants/common.constant';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setSearchValue } from '../../store/slices/searchSlice';
-import {
-  fetchOrganizationDetails,
-  fetchOrganizations,
-  fetchSearch,
-} from '../../store/reducers/ActionCreators';
+import { setPageData } from "../../store/slices/currentPageSlice";
 
 export function Search() {
   const searchValue = useAppSelector((state) => state.search.value);
   const dispatch = useAppDispatch();
   const input = useRef();
-  const pageState = useAppSelector((state) => state.currentPage);
 
   useEffect(() => {
     input.current.value = searchValue;
   }, []);
 
   const searchClick = (newValue: string): void => {
-    localStorage.setItem(LOCAL_STORAGE_SEARCH_VALUE, newValue);
-    dispatch(setSearchValue(newValue));
-    dispatch(
-      newValue
-        ? fetchSearch(newValue)
-        : fetchOrganizations(pageState.pageNumber, pageState.pageSize)
-    );
+      localStorage.setItem(LOCAL_STORAGE_SEARCH_VALUE, newValue);
+      dispatch(setSearchValue(newValue));
+      dispatch(
+          setPageData({
+              pageNumber: 1,
+              firstPage: true,
+              lastPage: true,
+          })
+      );
   };
 
   return (

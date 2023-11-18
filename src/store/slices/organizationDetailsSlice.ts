@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IOrganization } from '../../models/organization.model';
 
 interface IOrganizationDetailsState {
-  isLoading: boolean;
+  currentUID?: string;
   details: {
     [uid: string]: IOrganization;
   };
@@ -11,32 +11,26 @@ interface IOrganizationDetailsState {
 export const organizationDetailsSlice = createSlice<IOrganizationDetailsState>({
   name: 'organizationDetails',
   initialState: {
-    isLoading: true,
     details: {},
   },
   reducers: {
-    organizationDetailsFetching(state) {
-      state.isLoading = true;
-    },
-    organizationDetailsFetchingSuccess(
+    setOrganizationDetails(
       state,
       action: PayloadAction<{ uid: string; data: IOrganization }>
     ) {
       state.isLoading = false;
       state.details[action.payload.uid] = action.payload.data;
     },
-    organizationDetailsFetchingError(
-      state,
-      action: PayloadAction<{ uid: string; data: IOrganization }>
+    setDetailsUID(
+        state,
+        action: PayloadAction<string>
     ) {
-      state.isLoading = false;
-      state.details[action.payload.uid] = action.payload.data;
-    },
+      state.currentUID = action.payload;
+    }
   },
 });
 
 export const {
-  organizationDetailsFetching,
-  organizationDetailsFetchingSuccess,
-  organizationDetailsFetchingError,
+  setOrganizationDetails,
+    setDetailsUID,
 } = organizationDetailsSlice.actions;

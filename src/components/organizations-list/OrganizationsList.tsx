@@ -1,88 +1,77 @@
 import { useEffect, useState } from 'react';
-import { NavLink, useLocation, useSearchParams } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import { IOrganization } from '../../models/organization.model';
 import { Loader, LoaderColor } from '../loader/Loader';
 import './OrganizationsList.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { setPageData } from '../../store/slices/currentPageSlice';
-import { fetchOrganizations } from '../../store/reducers/ActionCreators';
+import { setDetailsUID } from "../../store/slices/organizationDetailsSlice";
+import { useFetchOrganizationDetailsQuery, useFetchOrganizationsQuery } from "../../services/OrganizationService";
 
 export function OrganizationsList() {
-  const [searchParams] = useSearchParams();
-  const [selectedItem, setSelectedItem] = useState<IOrganization>();
-  const location = useLocation();
-  const pageState = useAppSelector((state) => state.currentPage);
-  const organizations = useAppSelector(
-    (state) => state.organizations.page[pageState.pageNumber]
-  );
-  const isLoading = useAppSelector((state) => state.organizations.isLoading);
-  const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
+    const [displayItems, setDisplayItems] = useState([]);
+    const [searchParams] = useSearchParams();
+    const selectedDetailsUid = useAppSelector(state => state.organizationDetails.currentUID);
+    const pageState = useAppSelector((state) => state.currentPage);
+    const organizations = useAppSelector((state) => state.organizations.page[pageState.pageNumber]);
+    const searchResult = useAppSelector((state) => state.search.result);
+    const searchValue = useAppSelector((state) => state.search.value);
 
-  useEffect(() => {
-    const queryPageNumberParam: number = searchParams.get(
-      'pageNumber'
-    ) as number;
-    const queryPageSizeParam: number = searchParams.get('pageSize') as number;
+    const {
+        isFetching: isOrganizationsFetching,
+    } = useFetchOrganizationsQuery({pageNumber: pageState.pageNumber, pageSize: pageState.pageSize});
+    const {
+        isFetching: isOrganizationDetailsFetching,
+    } = useFetchOrganizationDetailsQuery(searchValue);
 
-    const initPageNumber: number =
-      queryPageNumberParam && queryPageNumberParam > 0
-        ? queryPageNumberParam - 1
-        : 0;
-    const initPageSize: number = queryPageSizeParam || 10;
+    const getLinkUrl = (uid): string => {
+        return (
+            'details/?' +
+            `pageNumber=${searchParams.get('pageNumber')}` +
+            `&pageSize=${searchParams.get('pageSize')}` +
+            `&search=${searchParams.get('search')}` +
+            `&uid=${uid}`
+        );
+    };
 
-    if (!pageState?.pageNumber) {
-      dispatch(
-        setPageData({
-          pageNumber: initPageNumber,
-          pageSize: initPageSize,
-          firstPage: true,
-          lastPage: true,
-        })
-      );
+    const linkClick = (item: IOrganization) => {
+        dispatch(setDetailsUID(item.uid));
     }
 
-    if (!organizations && !isLoading) {
-      dispatch(fetchOrganizations(pageState.pageNumber, pageState.pageSize));
-    }
-  }, []);
+    useEffect(() => {
+        setDisplayItems(searchValue
+            ? (searchResult ? [searchResult] : [])
+            : organizations,
+        );
+    }, [searchValue,searchResult, organizations]);
 
-  const getLinkUrl = (uid): string => {
     return (
-      'details/?' +
-      `pageNumber=${searchParams.get('pageNumber')}` +
-      `&pageSize=${searchParams.get('pageSize')}` +
-      `&search=${searchParams.get('search')}` +
-      `&uid=${uid}`
+        <div
+            className={
+                'organizations-list' +
+                ((isOrganizationsFetching || isOrganizationDetailsFetching) ? ' _loading' : '') +
+                (!displayItems?.length ? ' _empty' : '')
+            }
+        >
+            {(isOrganizationsFetching || isOrganizationDetailsFetching) ? (
+                <Loader color={LoaderColor.SALMON}/>
+            ) : displayItems?.length ? (
+                displayItems.map((item: IOrganization) => (
+                    <NavLink
+                        role="organization-list-item"
+                        to={getLinkUrl(item.uid)}
+                        className={`organizations-list-item ${
+                            selectedDetailsUid === item.uid ? '_active' : ''
+                        }`}
+                        onClick={() => linkClick(item)}
+                        key={item.name}
+                    >
+                        {item.name}
+                    </NavLink>
+                ))
+            ) : (
+                'No items'
+            )}
+        </div>
     );
-  };
-
-  return (
-    <div
-      className={
-        'organizations-list' +
-        (isLoading ? ' _loading' : '') +
-        (!organizations?.length ? ' _empty' : '')
-      }
-    >
-      {isLoading ? (
-        <Loader color={LoaderColor.SALMON} />
-      ) : organizations?.length ? (
-        organizations?.map((item: IOrganization) => (
-          <NavLink
-            role="organization-list-item"
-            to={getLinkUrl(item.uid)}
-            className={`organizations-list-item ${
-              selectedItem?.name === item.name ? '_active' : ''
-            }`}
-            onClick={() => setSelectedItem(item)}
-            key={item.name}
-          >
-            {item.name}
-          </NavLink>
-        ))
-      ) : (
-        'No items'
-      )}
-    </div>
-  );
 }

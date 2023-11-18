@@ -3,25 +3,29 @@ import { NavLink, useSearchParams } from 'react-router-dom';
 import './OrganizationDetails.scss';
 import { Loader, LoaderColor } from '../loader/Loader';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { fetchOrganizationDetails } from '../../store/reducers/ActionCreators';
+import { useFetchOrganizationDetailsQuery } from "../../services/OrganizationService";
+import { setDetailsUID, setOrganizationDetails } from "../../store/slices/organizationDetailsSlice";
 
 export default function OrganizationDetails() {
-  const [searchParams] = useSearchParams();
-  let id = searchParams.get('uid');
-
   const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
+  const uid = useAppSelector(state => state.organizationDetails.currentUID);
   const details = useAppSelector(
-    (state) => state.organizationDetails.details[id]
+      (state) => state.organizationDetails.details[uid]
   );
-  const isLoading = useAppSelector(
-    (state) => state.organizationDetails.isLoading
-  );
+
+  const {
+    data,
+    isFetching,
+  } = useFetchOrganizationDetailsQuery(uid);
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchOrganizationDetails(id));
-    }
-  }, [id]);
+    dispatch(setDetailsUID(searchParams.get('uid')))
+  }, []);
+
+  useEffect(() => {
+    data && dispatch(setOrganizationDetails({uid, data: data.organization}));
+  }, [data]);
 
   const convertKeyToInfoFormat = (key: string): string => {
     const copyKey = key[0].toUpperCase() + key.slice(1);
@@ -43,9 +47,9 @@ export default function OrganizationDetails() {
   return (
     <article
       role="organization-details"
-      className={'organization-details' + (isLoading ? ' _loading' : '')}
+      className={'organization-details' + (isFetching ? ' _loading' : '')}
     >
-      {isLoading ? (
+      {isFetching ? (
         <Loader color={LoaderColor.SALMON} />
       ) : details ? (
         <>
