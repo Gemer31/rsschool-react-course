@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './OrganizationsBar.scss';
 import Search from '../search/Search';
 import PagesBar from '../pages-bar/PagesBar';
-import OrganizationsList from "../organizations-list/OrganizationsList";
+import OrganizationsList from '../organizations-list/OrganizationsList';
 
 export default function OrganizationsBar() {
   const [boundaryError, setBoundaryError] = useState(false);
