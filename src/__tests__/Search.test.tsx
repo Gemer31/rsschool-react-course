@@ -36,10 +36,10 @@ describe('Search component', () => {
     const searchInput = await screen.getByRole('search-input');
     const searchButton = await screen.getByRole('search-button');
 
-    fireEvent.input(searchInput, { target: { value: mockDetails.uid } });
+    fireEvent.input(searchInput, { target: { value: mockDetails.organization.uid } });
     fireEvent.click(searchButton);
     expect(localStorageMock.getItem(LOCAL_STORAGE_SEARCH_VALUE)).toEqual(
-      mockDetails.uid
+      mockDetails.organization.uid
     );
   });
 

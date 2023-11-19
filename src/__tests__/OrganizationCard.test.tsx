@@ -7,23 +7,10 @@ import {
 } from 'react-router-dom';
 import { routerConfig } from '../App';
 import mockDetails from './mock/mock-details';
-import mockOrganizations from './mock/mock-organizations';
 import OrganizationsList from '../components/organizations-list/OrganizationsList';
+import { mockOrganizations } from "./mock/mock-organizations";
 
 describe('Card component', () => {
-  beforeAll(() => {
-    organizationApi.getItems = vi
-      .fn()
-      .mockReturnValue(Promise.resolve(mockOrganizations));
-    organizationApi.getDetails = vi
-      .fn()
-      .mockReturnValue(Promise.resolve(mockDetails));
-  });
-
-  afterAll(() => {
-    vi.clearAllMocks();
-  });
-
   it('Ensure that the card component renders the relevant card data', async () => {
     render(
       <MemoryRouter>
