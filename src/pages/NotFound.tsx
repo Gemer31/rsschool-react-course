@@ -1,10 +1,5 @@
-import { Link } from 'react-router-dom';
+import ErrorMessage from '../components/error-message/ErrorMessage';
 
 export default function NotFound() {
-  return (
-    <>
-      <h1>Not Found</h1>
-      <Link to="/">Go Home</Link>
-    </>
-  );
+  return <ErrorMessage message="Something went wrong" />;
 }

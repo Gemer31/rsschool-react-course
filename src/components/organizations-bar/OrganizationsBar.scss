@@ -1,0 +1,27 @@
+@import 'src/colors';
+
+.organizations-bar {
+  width: 40%;
+  background-color: $salmon;
+  padding: 8px;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  -webkit-box-shadow: 4px 1px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 0px rgba(34, 60, 80, 0.2);
+
+  & > *:not(:last-child) {
+    margin-bottom: 8px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__error {
+    margin-left: 8px;
+  }
+}
