@@ -10,6 +10,13 @@ export interface ILoaderProps {
 }
 export function Loader({ color }: ILoaderProps) {
   return (
-    <span role="loader" className={classes.loader + ' _' + (color || LoaderColor.WHITE)} />
+    <span
+      role="loader"
+      className={
+        classes.loader +
+        ' ' +
+        (color === LoaderColor.SALMON ? classes.salmon : '')
+      }
+    />
   );
 }

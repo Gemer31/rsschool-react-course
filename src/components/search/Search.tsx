@@ -1,30 +1,32 @@
 import classes from './Search.module.scss';
 import { useEffect, useRef } from 'react';
-import { setSearchValue } from '../../store/slices/searchSlice';
-import { setPageData } from '../../store/slices/currentPageSlice';
-import {useAppDispatch, useAppSelector} from "../../store/redux-hooks";
-import LOCAL_STORAGE_SEARCH_VALUE from "../../constants/common.constant";
+import { useRouter } from 'next/router';
+import { ISearchState } from '../../store/slices/searchSlice';
 
-export default function Search() {
-  const searchValue = useAppSelector((state) => state.search.value);
-  const dispatch = useAppDispatch();
+interface ISearchProps {
+  data: ISearchState;
+}
+
+export default function Search({ data }: ISearchProps) {
+  const router = useRouter();
+  const { query } = router;
   const input = useRef();
 
   useEffect(() => {
-    input.current.value = searchValue;
-  }, []);
+    if (data?.value) {
+      input.current.value = data.value;
+    }
+  });
 
-  // const searchClick = (newValue: string): void => {
-  //   localStorage.setItem(LOCAL_STORAGE_SEARCH_VALUE, newValue);
-  //   dispatch(setSearchValue(newValue));
-  //   dispatch(
-  //     setPageData({
-  //       pageNumber: 1,
-  //       firstPage: true,
-  //       lastPage: true,
-  //     })
-  //   );
-  // };
+  const searchClick = (newValue: string): void => {
+    router.push({
+      query: {
+        ...query,
+        search: newValue,
+        pageNumber: 1,
+      },
+    });
+  };
 
   return (
     <form className={classes.search__form}>
@@ -33,7 +35,7 @@ export default function Search() {
         role="search-input"
         type="text"
         className={classes.search__formInput}
-        placeholder="Type UID. Example: ORMA0000278954"
+        placeholder="Search by UID: Example: ORMA0000278954"
       />
       <button
         role="search-button"

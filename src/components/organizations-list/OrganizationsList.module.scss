@@ -7,18 +7,6 @@
   padding: 12px;
   overflow: auto;
 
-  &._loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &._empty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   &Item {
     padding: 6px 8px;
     border-radius: 1.25em;
@@ -30,9 +18,21 @@
       background-color: $cornflower-lilac;
       cursor: pointer;
     }
-
-    &._active {
-      background-color: $cornflower-lilac;
-    }
   }
+}
+
+.active {
+  background-color: $cornflower-lilac;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

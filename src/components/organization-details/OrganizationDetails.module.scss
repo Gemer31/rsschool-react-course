@@ -19,10 +19,6 @@
     top: 20px;
   }
 
-  &._loading {
-    justify-content: center;
-  }
-
   &__title {
     color: $salmon;
     font-size: 2rem;
@@ -41,4 +37,8 @@
       font-weight: bold;
     }
   }
+}
+
+.loading {
+  justify-content: center;
 }

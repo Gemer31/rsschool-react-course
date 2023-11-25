@@ -1,11 +1,21 @@
-import { IOrganization } from "../../models/organization.model";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import { IOrganization } from '../../models/organization.model';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import classes from './OrganizationDetails.module.scss';
+import { useContext } from 'react';
+import { GlobalContext, IGlobalContext } from '../../contexts/LoadingContext';
+import { Loader, LoaderColor } from '../loader/Loader';
 
-export default function OrganizationDetails({ data }: { data: IOrganization }) {
+interface IOrganizationDetailsProps {
+  data: IOrganization;
+}
+
+export default function OrganizationDetails({
+  data,
+}: IOrganizationDetailsProps) {
   const router = useRouter();
   const { query } = router;
+  const { isLoadingDetails }: IGlobalContext = useContext(GlobalContext);
 
   const convertKeyToInfoFormat = (key: string): string => {
     const copyKey = key[0].toUpperCase() + key.slice(1);
@@ -19,43 +29,52 @@ export default function OrganizationDetails({ data }: { data: IOrganization }) {
   return (
     <article
       role="organization-details"
-      className={classes.organizationDetails}
-      // className={'organization-details' + (isFetching ? ' _loading' : '')}
+      className={
+        classes.organizationDetails +
+        (isLoadingDetails ? ` ${classes.loading}` : '')
+      }
     >
-      <>
-        <Link
+      {isLoadingDetails ? (
+        <Loader color={LoaderColor.SALMON} />
+      ) : (
+        <>
+          <Link
             role="organization-details-close-button"
             className={classes.organizationDetails__cross}
             href={{
+              ...query,
               pageNumber: query.pageNumber,
               pageSize: query.pageSize,
               search: query.search,
             }}
-        />
-        <div
+          />
+          <div
             role="organization-details-title"
             className={classes.organizationDetails__title}
-        >
-          {data.name}
-        </div>
-        <div className={classes.organizationDetails__info}>
-          {Object.keys(data).map((dataKey: string) =>
+          >
+            {data.name}
+          </div>
+          <div className={classes.organizationDetails__info}>
+            {Object.keys(data).map((dataKey: string) =>
               ['uid', 'name'].includes(dataKey) ? (
-                  ''
+                ''
               ) : (
-                  <div role="details-param" key={data.uid + dataKey}>
-                    {convertKeyToInfoFormat(dataKey)}-
-                    <span
-                        role="detailsValue"
-                        className={data[dataKey] ? classes.organizationDetails__infoTrue: ''}
-                    >
+                <div role="details-param" key={data.uid + dataKey}>
+                  {convertKeyToInfoFormat(dataKey)}-
+                  <span
+                    role="detailsValue"
+                    className={
+                      data[dataKey] ? classes.organizationDetails__infoTrue : ''
+                    }
+                  >
                     {data[dataKey] ? 'Yes' : 'No'}
                   </span>
-                  </div>
+                </div>
               )
-          )}
-        </div>
-      </>
+            )}
+          </div>
+        </>
+      )}
     </article>
   );
 }
