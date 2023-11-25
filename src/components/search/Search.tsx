@@ -1,7 +1,7 @@
-import classes from './Search.module.scss';
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { ISearchState } from '../../store/slices/searchSlice';
+import classes from './Search.module.scss';
 
 interface ISearchProps {
   data: ISearchState;

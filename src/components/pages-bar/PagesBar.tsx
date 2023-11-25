@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { IPage } from '../../models/organization.model';
-import { useAppDispatch, useAppSelector } from '../../store/redux-hooks';
-import LOCAL_STORAGE_SEARCH_VALUE from '../../constants/common.constant';
 import { useRouter } from 'next/router';
 import classes from './PagesBar.module.scss';
 

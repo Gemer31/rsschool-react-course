@@ -4,7 +4,7 @@ import Link from 'next/link';
 import classes from './OrganizationDetails.module.scss';
 import { useContext } from 'react';
 import { GlobalContext, IGlobalContext } from '../../contexts/LoadingContext';
-import { Loader, LoaderColor } from '../loader/Loader';
+import { Loader } from '../loader/Loader';
 
 interface IOrganizationDetailsProps {
   data: IOrganization;
@@ -35,7 +35,7 @@ export default function OrganizationDetails({
       }
     >
       {isLoadingDetails ? (
-        <Loader color={LoaderColor.SALMON} />
+        <Loader />
       ) : (
         <>
           <Link

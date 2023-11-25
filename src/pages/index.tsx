@@ -1,9 +1,9 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { Provider } from 'react-redux';
 import Head from 'next/head';
 import ErrorBoundary from '../components/error-boundary/ErrorBoundary';
 import OrganizationsBar from '../components/organizations-bar/OrganizationsBar';
 import { store, wrapper } from '../store/store';
-import { Provider } from 'react-redux';
 import {
   fetchOrganizationBySearch,
   fetchOrganizationDetails,
@@ -16,16 +16,16 @@ import { setPageData } from '../store/slices/organizationsSlice';
 import { setSearchValue } from '../store/slices/searchSlice';
 
 export const getServerSideProps: GetServerSideProps<unknown> =
-  wrapper.getServerSideProps((store) => async (context) => {
+  wrapper.getServerSideProps((storeProp) => async (context) => {
     const { pageNumber, pageSize, search, uid } = context.query;
 
     const initPageNumber: number = +pageNumber > 0 ? +pageNumber : 1;
     const initPageSize: number = +pageSize || 10;
 
-    let state = store.getState();
+    let state = storeProp.getState();
 
     if (!state.organizations.page[initPageNumber] && !search) {
-      store.dispatch(
+      storeProp.dispatch(
         fetchOrganizations.initiate({
           pageNumber: initPageNumber,
           pageSize: initPageSize,
@@ -34,9 +34,9 @@ export const getServerSideProps: GetServerSideProps<unknown> =
       );
     }
     if (search) {
-      store.dispatch(fetchOrganizationBySearch.initiate(search));
-      store.dispatch(setSearchValue(search));
-      store.dispatch(
+      storeProp.dispatch(fetchOrganizationBySearch.initiate(search));
+      storeProp.dispatch(setSearchValue(search));
+      storeProp.dispatch(
         setPageData({
           pageNumber: 1,
           pageSize: initPageSize,
@@ -46,12 +46,12 @@ export const getServerSideProps: GetServerSideProps<unknown> =
       );
     }
     if (uid) {
-      store.dispatch(fetchOrganizationDetails.initiate(uid));
+      storeProp.dispatch(fetchOrganizationDetails.initiate(uid));
     }
 
-    await Promise.all(store.dispatch(getRunningQueriesThunk()));
+    await Promise.all(storeProp.dispatch(getRunningQueriesThunk()));
 
-    state = store.getState();
+    state = storeProp.getState();
 
     return {
       props: {
@@ -68,9 +68,9 @@ export const getServerSideProps: GetServerSideProps<unknown> =
     };
   });
 
-const HomePage = ({
+export default function HomePage({
   data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { organizations, details, pageState, search } = data;
   const context: IGlobalContext = {
     isLoadingDetails: !details,
@@ -97,6 +97,4 @@ const HomePage = ({
       </ErrorBoundary>
     </>
   );
-};
-
-export default HomePage;
+}

@@ -3,7 +3,7 @@ import classes from './OrganizationsList.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
-import { Loader, LoaderColor } from '../loader/Loader';
+import { Loader } from '../loader/Loader';
 import { GlobalContext, IGlobalContext } from '../../contexts/LoadingContext';
 
 interface IOrganizationListProps {
@@ -52,7 +52,7 @@ export default function OrganizationsList({
       }
     >
       {loadings.isLoadingItems ? (
-        <Loader color={LoaderColor.SALMON} />
+        <Loader />
       ) : data?.length ? (
         data.map((item: IOrganization) => (
           <Link

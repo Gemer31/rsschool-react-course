@@ -11,14 +11,14 @@ export default function ErrorMessage({
   callback,
 }: IErrorMessageProps) {
   return (
-    <main className={classes.errorMessage__message}>
+    <main className={classes.errorMessage}>
       <span
         data-testid="errorMessage"
         className={classes.errorMessage__message}
       >
         {message}
       </span>
-      <Link to="/" className="error-message__link" onClick={() => callback?.()}>
+      <Link href="/" onClick={() => callback?.()}>
         Go Home
       </Link>
     </main>

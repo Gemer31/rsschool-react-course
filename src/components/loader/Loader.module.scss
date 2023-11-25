@@ -12,15 +12,10 @@
 .loader {
   width: 28px;
   height: 28px;
-  border: 2px solid white;
-  border-bottom-color: transparent;
+  border: 2px solid $salmon;
+  border-bottom-color: white;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
-}
-
-.salmon {
-  border-color: $salmon;
-  border-bottom-color: white;
 }

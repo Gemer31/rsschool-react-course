@@ -5,7 +5,7 @@ import {
 } from '../models/organization.model';
 import { setOrganizations } from '../store/slices/organizationsSlice';
 import { setOrganizationDetails } from '../store/slices/organizationDetailsSlice';
-import { setSearchResult, setSearchValue } from '../store/slices/searchSlice';
+import { setSearchResult } from '../store/slices/searchSlice';
 
 export const organizationAPI = createApi({
   reducerPath: 'organizationAPI',

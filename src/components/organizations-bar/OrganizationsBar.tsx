@@ -23,7 +23,7 @@ export default function OrganizationsBar({
   const [boundaryError, setBoundaryError] = useState(false);
 
   if (boundaryError) {
-    throw Error('Boundary Error');
+    throw new Error('Boundary Error');
   }
 
   return (

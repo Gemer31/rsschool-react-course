@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { createWrapper } from 'next-redux-wrapper';
 import { organizationsSlice } from './slices/organizationsSlice';
 import { organizationDetailsSlice } from './slices/organizationDetailsSlice';
 import { searchSlice } from './slices/searchSlice';
 import { organizationAPI } from '../services/OrganizationService';
-import { createWrapper } from 'next-redux-wrapper';
-import { setupListeners } from '@reduxjs/toolkit/query';
 
 export const rootReducer = combineReducers({
   organizationDetails: organizationDetailsSlice.reducer,

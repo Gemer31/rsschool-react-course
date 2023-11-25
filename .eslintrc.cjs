@@ -62,5 +62,8 @@ module.exports = {
     'react/jsx-no-constructed-context-values': 'off',
     'no-param-reassign': 'off',
     'react/jsx-no-useless-fragment': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'import/order': 'off',
+    'jsx-a11y/control-has-associated-label': 'off',
   },
 };

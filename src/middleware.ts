@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export default function middleware(request: NextRequest): NextResponse {
   const url = request.nextUrl.clone();
 
   const page = url.searchParams.get('pageNumber');
@@ -16,4 +16,6 @@ export function middleware(request: NextRequest) {
     !pageSize && url.searchParams.set('pageSize', '10');
     return NextResponse.redirect(url);
   }
+
+  return NextResponse.next();
 }
