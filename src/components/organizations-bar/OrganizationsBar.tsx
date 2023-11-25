@@ -1,10 +1,17 @@
 import { useState } from 'react';
-import './OrganizationsBar.scss';
+import classes from './OrganizationsBar.module.scss';
 import Search from '../search/Search';
 import PagesBar from '../pages-bar/PagesBar';
 import OrganizationsList from '../organizations-list/OrganizationsList';
+import { IOrganization, IPage } from "../../models/organization.model";
 
-export default function OrganizationsBar() {
+interface IOrganizationBarProps {
+    organizations: IOrganization[];
+    details: IOrganization;
+    pageState: IPage;
+}
+
+export default function OrganizationsBar({ organizations, details, pageState }: IOrganizationBarProps) {
   const [boundaryError, setBoundaryError] = useState(false);
 
   if (boundaryError) {
@@ -12,19 +19,19 @@ export default function OrganizationsBar() {
   }
 
   return (
-    <article className="organizations-bar">
-      <header className="organizations-bar__header">
+    <article className={classes.organizationsBar}>
+      <header className={classes.organizationsBar__header}>
         <Search />
         <button
           type="button"
-          className="button organizations-bar__error"
+          className={"button " + classes.organizationsBar__error}
           onClick={() => setBoundaryError(true)}
         >
           Throw error
         </button>
       </header>
-      <OrganizationsList />
-      <PagesBar />
+      <OrganizationsList data={organizations}/>
+      <PagesBar pageState={pageState}/>
     </article>
   );
 }

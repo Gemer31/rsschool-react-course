@@ -2,30 +2,22 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IOrganization } from '../../models/organization.model';
 
 interface IOrganizationDetailsState {
-  currentUID?: string;
-  details: {
-    [uid: string]: IOrganization;
-  };
+  details: IOrganization | null;
 }
 
 export const organizationDetailsSlice = createSlice<IOrganizationDetailsState>({
   name: 'organizationDetails',
   initialState: {
-    details: {},
+    details: null,
   },
   reducers: {
     setOrganizationDetails(
       state,
-      action: PayloadAction<{ uid: string; data: IOrganization }>
+      action: PayloadAction<IOrganization>
     ) {
-      state.isLoading = false;
-      state.details[action.payload.uid] = action.payload.data;
-    },
-    setDetailsUID(state, action: PayloadAction<string>) {
-      state.currentUID = action.payload;
+      state.details = action.payload;
     },
   },
 });
 
-export const { setOrganizationDetails, setDetailsUID } =
-  organizationDetailsSlice.actions;
+export const { setOrganizationDetails, setDetailsUID } = organizationDetailsSlice.actions;

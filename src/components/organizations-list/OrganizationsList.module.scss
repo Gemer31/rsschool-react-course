@@ -1,6 +1,6 @@
-@import 'src/colors';
+@import '../../styles/colors';
 
-.organizations-list {
+.organizationsList {
   background-color: white;
   height: 100%;
   border-radius: 1em;
@@ -19,7 +19,7 @@
     justify-content: center;
   }
 
-  &-item {
+  &Item {
     padding: 6px 8px;
     border-radius: 1.25em;
     display: block;

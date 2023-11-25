@@ -1,5 +1,5 @@
-import { NavLink } from 'react-router-dom';
-import './ErrorMessage.scss';
+import classes from './ErrorMessage.module.scss';
+import Link from "next/link";
 
 interface IErrorMessageProps {
   message: string;
@@ -11,17 +11,17 @@ export default function ErrorMessage({
   callback,
 }: IErrorMessageProps) {
   return (
-    <main className="error-message">
-      <span data-testid="errorMessage" className="error-message__message">
+    <main className={classes.errorMessage__message}>
+      <span data-testid="errorMessage" className={classes.errorMessage__message}>
         {message}
       </span>
-      <NavLink
+      <Link
         to="/"
         className="error-message__link"
         onClick={() => callback?.()}
       >
         Go Home
-      </NavLink>
+      </Link>
     </main>
   );
 }

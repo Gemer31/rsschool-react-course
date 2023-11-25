@@ -1,31 +1,11 @@
-import { useEffect } from 'react';
-import { NavLink, useSearchParams } from 'react-router-dom';
-import './OrganizationDetails.scss';
-import { Loader, LoaderColor } from '../loader/Loader';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { useFetchOrganizationDetailsQuery } from '../../services/OrganizationService';
-import {
-  setDetailsUID,
-  setOrganizationDetails,
-} from '../../store/slices/organizationDetailsSlice';
+import { IOrganization } from "../../models/organization.model";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import classes from './OrganizationDetails.module.scss';
 
-export default function OrganizationDetails() {
-  const dispatch = useAppDispatch();
-  const [searchParams] = useSearchParams();
-  const uid = useAppSelector((state) => state.organizationDetails.currentUID);
-  const details = useAppSelector(
-    (state) => state.organizationDetails.details[uid]
-  );
-
-  const { data, isFetching } = useFetchOrganizationDetailsQuery(uid);
-
-  useEffect(() => {
-    dispatch(setDetailsUID(searchParams.get('uid')));
-  }, []);
-
-  useEffect(() => {
-    data && dispatch(setOrganizationDetails({ uid, data: data.organization }));
-  }, [data]);
+export default function OrganizationDetails({ data }: { data: IOrganization }) {
+  const router = useRouter();
+  const { query } = router;
 
   const convertKeyToInfoFormat = (key: string): string => {
     const copyKey = key[0].toUpperCase() + key.slice(1);
@@ -36,58 +16,46 @@ export default function OrganizationDetails() {
     return result.trim();
   };
 
-  const getLinkUrl = (): string => {
-    return (
-      `/?pageNumber=${searchParams.get('pageNumber')}` +
-      `&pageSize=${searchParams.get('pageSize')}` +
-      `&search=${searchParams.get('search')}`
-    );
-  };
-
   return (
     <article
       role="organization-details"
-      className={'organization-details' + (isFetching ? ' _loading' : '')}
+      className={classes.organizationDetails}
+      // className={'organization-details' + (isFetching ? ' _loading' : '')}
     >
-      {isFetching ? (
-        <Loader color={LoaderColor.SALMON} />
-      ) : details ? (
-        <>
-          <NavLink
+      <>
+        <Link
             role="organization-details-close-button"
-            className="organization-details__cross"
-            to={getLinkUrl()}
-          />
-          <div
+            className={classes.organizationDetails__cross}
+            href={{
+              pageNumber: query.pageNumber,
+              pageSize: query.pageSize,
+              search: query.search,
+            }}
+        />
+        <div
             role="organization-details-title"
-            className="organization-details__title"
-          >
-            {details.name}
-          </div>
-          <div className="organization-details__info">
-            {Object.keys(details).map((dataKey: string) =>
+            className={classes.organizationDetails__title}
+        >
+          {data.name}
+        </div>
+        <div className={classes.organizationDetails__info}>
+          {Object.keys(data).map((dataKey: string) =>
               ['uid', 'name'].includes(dataKey) ? (
-                ''
+                  ''
               ) : (
-                <div role="details-param" key={details.uid + dataKey}>
-                  {convertKeyToInfoFormat(dataKey)}-
-                  <span
-                    role="detailsValue"
-                    className={
-                      'organization-details__info' +
-                      (details[dataKey] ? '-true' : '-false')
-                    }
-                  >
-                    {details[dataKey] ? 'Yes' : 'No'}
+                  <div role="details-param" key={data.uid + dataKey}>
+                    {convertKeyToInfoFormat(dataKey)}-
+                    <span
+                        role="detailsValue"
+                        className={data[dataKey] ? classes.organizationDetails__infoTrue: ''}
+                    >
+                    {data[dataKey] ? 'Yes' : 'No'}
                   </span>
-                </div>
+                  </div>
               )
-            )}
-          </div>
-        </>
-      ) : (
-        <></>
-      )}
+          )}
+        </div>
+      </>
     </article>
   );
 }

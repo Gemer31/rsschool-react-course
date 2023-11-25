@@ -1,4 +1,5 @@
 @import 'colors';
+@import "icons";
 
 html {
   height: 100%;
@@ -9,6 +10,11 @@ body {
   font-family: Roboto, sans-serif;
   height: 100%;
   margin: 0;
+}
+
+body > div {
+  display: flex;
+  height: 100%;
 }
 
 #root {
@@ -27,4 +33,8 @@ body {
 
 .button {
   cursor: pointer;
+}
+
+.rotate {
+  transform: rotateZ(180deg);
 }

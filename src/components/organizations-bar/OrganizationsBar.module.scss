@@ -1,6 +1,6 @@
-@import 'src/colors';
+@import '../../styles/colors';
 
-.organizations-bar {
+.organizationsBar {
   width: 40%;
   background-color: $salmon;
   padding: 8px;
@@ -11,6 +11,7 @@
   -webkit-box-shadow: 4px 1px 8px 0px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: 4px 1px 8px 0px rgba(34, 60, 80, 0.2);
   box-shadow: 4px 1px 8px 0px rgba(34, 60, 80, 0.2);
+  height: calc(100% - 16px);
 
   & > *:not(:last-child) {
     margin-bottom: 8px;

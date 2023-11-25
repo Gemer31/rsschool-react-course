@@ -1,14 +1,7 @@
-.pages-bar {
+.pagesBar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  &__button {
-    &._disable {
-      opacity: 0.5;
-      pointer-events: none;
-    }
-  }
 
   &__page {
     margin: 0 8px;
@@ -23,7 +16,7 @@
     display: flex;
     align-items: center;
 
-    &-field {
+    &Field {
       width: 50px;
       margin-right: 8px;
     }
@@ -33,17 +26,5 @@
     width: 20px;
     height: 20px;
     fill: white;
-
-    &._arrow {
-      background-image: url('../../assets/icons/arrow.svg');
-    }
-
-    &._reload {
-      background-image: url('../../assets/icons/reload.svg');
-    }
-
-    &._rotate {
-      transform: rotateZ(180deg);
-    }
   }
 }

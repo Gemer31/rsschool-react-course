@@ -1,6 +1,6 @@
-@import 'src/colors';
+@import '../../styles/colors';
 
-.organization-details {
+.organizationDetails {
   width: 60%;
   flex-grow: 2;
   display: flex;
@@ -13,7 +13,7 @@
   &__cross {
     width: 20px;
     height: 20px;
-    background-image: url('/src/assets/icons/cross.svg');
+    background-image: url('../../../public/icons/cross.svg');
     position: absolute;
     right: 20px;
     top: 20px;

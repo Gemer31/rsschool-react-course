@@ -1,4 +1,4 @@
-import './Loader.scss';
+import classes from './Loader.module.scss';
 
 export enum LoaderColor {
   SALMON = 'salmon',
@@ -10,6 +10,6 @@ export interface ILoaderProps {
 }
 export function Loader({ color }: ILoaderProps) {
   return (
-    <span role="loader" className={'loader _' + (color || LoaderColor.WHITE)} />
+    <span role="loader" className={classes.loader + ' _' + (color || LoaderColor.WHITE)} />
   );
 }

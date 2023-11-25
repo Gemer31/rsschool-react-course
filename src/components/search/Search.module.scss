@@ -1,4 +1,4 @@
-@import 'src/colors';
+@import '../../styles/colors';
 
 .search {
   &__form {
@@ -11,7 +11,7 @@
     box-shadow: 0 0.125em 0.3125em rgba(0, 0, 0, 0.3);
     display: flex;
 
-    &__input {
+    &Input {
       border-radius: 18px;
       font-size: 1em;
       color: $your-pink;
@@ -41,7 +41,7 @@
       }
     }
 
-    &__button {
+    &Button {
       color: white;
       font-weight: bold;
       width: 7em;
