@@ -22,7 +22,7 @@ export default function OrganizationsBar({
   selectedDetailsUid,
 }: IOrganizationBarProps) {
   const [boundaryError, setBoundaryError] = useState(false);
-  const [isLoadingItems, setIsLoadingItems] = useState(false);
+  const [isLoadingItems, setIsLoadingItems] = useState(true);
 
   useEffect(() => setIsLoadingItems(false), [organizations]);
 
@@ -33,7 +33,10 @@ export default function OrganizationsBar({
   return (
     <article className={classes.organizationsBar}>
       <header className={classes.organizationsBar__header}>
-        <Search data={search} />
+        <Search
+          data={search}
+          searchClickCallback={() => setIsLoadingItems(true)}
+        />
         <button
           type="button"
           className={'button ' + classes.organizationsBar__error}

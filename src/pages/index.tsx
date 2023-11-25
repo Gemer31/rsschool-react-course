@@ -80,10 +80,7 @@ export default function HomePage({
     isLoadingDetails: false,
     isLoadingItems: false,
   };
-
-  console.log('data: ', data);
-
-  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+  const [isLoadingDetails, setIsLoadingDetails] = useState(true);
 
   useEffect(() => setIsLoadingDetails(false), [details]);
 

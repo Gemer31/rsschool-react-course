@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import classes from './OrganizationDetails.module.scss';
 import Loader from '../loader/Loader';
-import { useEffect } from 'react';
 
 interface IOrganizationDetailsProps {
   data: IOrganization;
@@ -16,12 +15,6 @@ export default function OrganizationDetails({
 }: IOrganizationDetailsProps) {
   const router = useRouter();
   const { query } = router;
-
-  useEffect(() => {
-    if (data) {
-      console.log('!!!!!!!');
-    }
-  }, [data]);
 
   const convertKeyToInfoFormat = (key: string): string => {
     const copyKey = key[0].toUpperCase() + key.slice(1);

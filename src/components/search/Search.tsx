@@ -5,9 +5,10 @@ import classes from './Search.module.scss';
 
 interface ISearchProps {
   data: ISearchState;
+  searchClickCallback: () => void;
 }
 
-export default function Search({ data }: ISearchProps) {
+export default function Search({ data, searchClickCallback }: ISearchProps) {
   const router = useRouter();
   const { query } = router;
   const input = useRef();
@@ -19,6 +20,7 @@ export default function Search({ data }: ISearchProps) {
   });
 
   const searchClick = (newValue: string): void => {
+    searchClickCallback();
     router.push({
       query: {
         ...query,
