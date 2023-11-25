@@ -3,18 +3,25 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import classes from './OrganizationDetails.module.scss';
 import Loader from '../loader/Loader';
-import { useGlobalContext } from '../../contexts/GlobalContext';
+import { useEffect } from 'react';
 
 interface IOrganizationDetailsProps {
   data: IOrganization;
+  isLoading: boolean;
 }
 
 export default function OrganizationDetails({
   data,
+  isLoading,
 }: IOrganizationDetailsProps) {
   const router = useRouter();
   const { query } = router;
-  const { isLoadingDetails } = useGlobalContext();
+
+  useEffect(() => {
+    if (data) {
+      console.log('!!!!!!!');
+    }
+  }, [data]);
 
   const convertKeyToInfoFormat = (key: string): string => {
     const copyKey = key[0].toUpperCase() + key.slice(1);
@@ -29,11 +36,10 @@ export default function OrganizationDetails({
     <article
       role="organization-details"
       className={
-        classes.organizationDetails +
-        (isLoadingDetails ? ` ${classes.loading}` : '')
+        classes.organizationDetails + (isLoading ? ` ${classes.loading}` : '')
       }
     >
-      {isLoadingDetails ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <>

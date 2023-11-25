@@ -2,35 +2,28 @@ import { IOrganization } from '../../models/organization.model';
 import classes from './OrganizationsList.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Loader from '../loader/Loader';
-import { useGlobalContext } from '../../contexts/GlobalContext';
 
 interface IOrganizationListProps {
   selectedOrganizationUid: string;
   data: IOrganization[];
+  isLoading: boolean;
+  linkClickCallback: () => void;
 }
 
 export default function OrganizationsList({
   data,
   selectedOrganizationUid,
+  isLoading,
+  linkClickCallback,
 }: IOrganizationListProps) {
   const router = useRouter();
   const { pathname, query } = router;
-  const { isLoadingItems, setIsLoadingItems, setIsLoadingDetails } =
-    useGlobalContext();
   const [selectedUID, setSelectedUID] = useState(selectedOrganizationUid);
 
-  useEffect(() => {
-    console.log('!!!!!!!!!!!');
-  }, [isLoadingItems]);
-
-  useEffect(() => {
-    data && setIsLoadingItems(false);
-  }, [data]);
-
   const linkClick = (item: IOrganization) => {
-    setIsLoadingDetails(true);
+    linkClickCallback();
     setSelectedUID(item.uid);
   };
 
@@ -38,11 +31,11 @@ export default function OrganizationsList({
     <div
       className={
         classes.organizationsList +
-        (isLoadingItems ? ` ${classes.loading}` : '') +
+        (isLoading ? ` ${classes.loading}` : '') +
         (!data?.length ? ` ${classes.empty}` : '')
       }
     >
-      {isLoadingItems ? (
+      {isLoading ? (
         <Loader />
       ) : data?.length ? (
         data.map((item: IOrganization) => (

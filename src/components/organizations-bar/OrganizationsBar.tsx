@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classes from './OrganizationsBar.module.scss';
 import Search from '../search/Search';
 import PagesBar from '../pages-bar/PagesBar';
@@ -11,16 +11,20 @@ interface IOrganizationBarProps {
   search: ISearchState;
   pageState: IPage;
   selectedDetailsUid: string;
+  setIsLoadingDetails: (v: boolean) => void;
 }
 
 export default function OrganizationsBar({
   organizations,
   search,
   pageState,
-  setLoading,
+  setIsLoadingDetails,
   selectedDetailsUid,
 }: IOrganizationBarProps) {
   const [boundaryError, setBoundaryError] = useState(false);
+  const [isLoadingItems, setIsLoadingItems] = useState(false);
+
+  useEffect(() => setIsLoadingItems(false), [organizations]);
 
   if (boundaryError) {
     throw new Error('Boundary Error');
@@ -42,10 +46,14 @@ export default function OrganizationsBar({
         data={
           search.value ? (search.result ? [search.result] : []) : organizations
         }
+        isLoading={isLoadingItems}
         selectedOrganizationUid={selectedDetailsUid}
-        setLoading={setLoading}
+        linkClickCallback={() => setIsLoadingDetails(true)}
       />
-      <PagesBar pageState={pageState} />
+      <PagesBar
+        pageState={pageState}
+        changePageClickCallback={() => setIsLoadingItems(true)}
+      />
     </article>
   );
 }

@@ -17,6 +17,7 @@ import {
 } from '../contexts/GlobalContext';
 import { setPageData } from '../store/slices/organizationsSlice';
 import { setSearchValue } from '../store/slices/searchSlice';
+import { useEffect, useState } from 'react';
 
 export const getServerSideProps: GetServerSideProps<unknown> =
   wrapper.getServerSideProps((storeProp) => async (context) => {
@@ -82,6 +83,10 @@ export default function HomePage({
 
   console.log('data: ', data);
 
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+
+  useEffect(() => setIsLoadingDetails(false), [details]);
+
   return (
     <>
       <Head>
@@ -95,8 +100,16 @@ export default function HomePage({
               organizations={organizations}
               pageState={pageState}
               selectedDetailsUid={details?.uid}
+              setIsLoadingDetails={setIsLoadingDetails}
             />
-            {details ? <OrganizationDetails data={details} /> : <></>}
+            {details || isLoadingDetails ? (
+              <OrganizationDetails
+                isLoading={isLoadingDetails}
+                data={details}
+              />
+            ) : (
+              <></>
+            )}
           </GlobalContextProvider>
         </Provider>
       </ErrorBoundary>
