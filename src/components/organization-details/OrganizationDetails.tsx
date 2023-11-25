@@ -2,9 +2,8 @@ import { IOrganization } from '../../models/organization.model';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import classes from './OrganizationDetails.module.scss';
-import { useContext } from 'react';
-import { GlobalContext, IGlobalContext } from '../../contexts/LoadingContext';
-import { Loader } from '../loader/Loader';
+import Loader from '../loader/Loader';
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 interface IOrganizationDetailsProps {
   data: IOrganization;
@@ -15,7 +14,7 @@ export default function OrganizationDetails({
 }: IOrganizationDetailsProps) {
   const router = useRouter();
   const { query } = router;
-  const { isLoadingDetails }: IGlobalContext = useContext(GlobalContext);
+  const { isLoadingDetails } = useGlobalContext();
 
   const convertKeyToInfoFormat = (key: string): string => {
     const copyKey = key[0].toUpperCase() + key.slice(1);
@@ -41,11 +40,10 @@ export default function OrganizationDetails({
           <Link
             role="organization-details-close-button"
             className={classes.organizationDetails__cross}
-            href={{
-              ...query,
-              pageNumber: query.pageNumber,
-              pageSize: query.pageSize,
-              search: query.search,
+            href="/"
+            onClick={() => {
+              delete query.uid;
+              router.push({ query });
             }}
           />
           <div

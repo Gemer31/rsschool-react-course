@@ -40,7 +40,7 @@ export default function OrganizationsBar({
       </header>
       <OrganizationsList
         data={
-          search.value ? (search.result ? search.result : []) : organizations
+          search.value ? (search.result ? [search.result] : []) : organizations
         }
         selectedOrganizationUid={selectedDetailsUid}
         setLoading={setLoading}

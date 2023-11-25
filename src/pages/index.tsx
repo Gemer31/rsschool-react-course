@@ -11,7 +11,10 @@ import {
   getRunningQueriesThunk,
 } from '../services/OrganizationService';
 import OrganizationDetails from '../components/organization-details/OrganizationDetails';
-import { GlobalContext, IGlobalContext } from '../contexts/LoadingContext';
+import {
+  GlobalContextProvider,
+  IGlobalContext,
+} from '../contexts/GlobalContext';
 import { setPageData } from '../store/slices/organizationsSlice';
 import { setSearchValue } from '../store/slices/searchSlice';
 
@@ -73,9 +76,11 @@ export default function HomePage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { organizations, details, pageState, search } = data;
   const context: IGlobalContext = {
-    isLoadingDetails: !details,
+    isLoadingDetails: false,
     isLoadingItems: false,
   };
+
+  console.log('data: ', data);
 
   return (
     <>
@@ -84,7 +89,7 @@ export default function HomePage({
       </Head>
       <ErrorBoundary>
         <Provider store={store}>
-          <GlobalContext.Provider value={context}>
+          <GlobalContextProvider value={context}>
             <OrganizationsBar
               search={search}
               organizations={organizations}
@@ -92,7 +97,7 @@ export default function HomePage({
               selectedDetailsUid={details?.uid}
             />
             {details ? <OrganizationDetails data={details} /> : <></>}
-          </GlobalContext.Provider>
+          </GlobalContextProvider>
         </Provider>
       </ErrorBoundary>
     </>

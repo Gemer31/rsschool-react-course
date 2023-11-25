@@ -20,13 +20,21 @@ export const organizationAPI = createApi({
       query: (params: { pageNumber: number; pageSize: number }) => ({
         url: '/search',
         params: {
-          pageNumber: params.pageNumber,
+          pageNumber: params.pageNumber - 1,
           pageSize: params.pageSize,
         },
       }),
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         const response: { data: IOrganizationsResponse } = await queryFulfilled;
-        dispatch(setOrganizations(response.data));
+        dispatch(
+          setOrganizations({
+            page: {
+              ...response.data.page,
+              pageNumber: response.data.page.pageNumber + 1,
+            },
+            organizations: response.data.organizations,
+          })
+        );
       },
     }),
     fetchOrganizationBySearch: build.query<IOrganizationsResponse, string>({
@@ -59,8 +67,6 @@ export const organizationAPI = createApi({
 });
 
 export const {
-  useFetchOrganizationsQuery,
-  useFetchOrganizationDetailsQuery,
   util: { getRunningQueriesThunk },
 } = organizationAPI;
 export const {

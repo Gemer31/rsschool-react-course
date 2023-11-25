@@ -2,9 +2,9 @@ import { IOrganization } from '../../models/organization.model';
 import classes from './OrganizationsList.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
-import { Loader } from '../loader/Loader';
-import { GlobalContext, IGlobalContext } from '../../contexts/LoadingContext';
+import { useEffect, useState } from 'react';
+import Loader from '../loader/Loader';
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 interface IOrganizationListProps {
   selectedOrganizationUid: string;
@@ -17,41 +17,32 @@ export default function OrganizationsList({
 }: IOrganizationListProps) {
   const router = useRouter();
   const { pathname, query } = router;
-  const loadings: IGlobalContext = useContext(GlobalContext);
+  const { isLoadingItems, setIsLoadingItems, setIsLoadingDetails } =
+    useGlobalContext();
   const [selectedUID, setSelectedUID] = useState(selectedOrganizationUid);
 
   useEffect(() => {
-    if (data) {
-      loadings.isLoadingItems = false;
-    }
-  }, [data]);
+    console.log('!!!!!!!!!!!');
+  }, [isLoadingItems]);
 
   useEffect(() => {
-    if (data) {
-      loadings.isLoadingItems = false;
-    }
+    data && setIsLoadingItems(false);
   }, [data]);
 
   const linkClick = (item: IOrganization) => {
-    loadings.isLoadingDetails = true;
+    setIsLoadingDetails(true);
     setSelectedUID(item.uid);
-    router.push({
-      query: {
-        ...query,
-        uid: item.uid,
-      },
-    });
   };
 
   return (
     <div
       className={
         classes.organizationsList +
-        (loadings.isLoadingItems ? ` ${classes.loading}` : '') +
+        (isLoadingItems ? ` ${classes.loading}` : '') +
         (!data?.length ? ` ${classes.empty}` : '')
       }
     >
-      {loadings.isLoadingItems ? (
+      {isLoadingItems ? (
         <Loader />
       ) : data?.length ? (
         data.map((item: IOrganization) => (
