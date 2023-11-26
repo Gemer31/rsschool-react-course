@@ -11,10 +11,6 @@ import {
   getRunningQueriesThunk,
 } from '../services/OrganizationService';
 import OrganizationDetails from '../components/organization-details/OrganizationDetails';
-import {
-  GlobalContextProvider,
-  IGlobalContext,
-} from '../contexts/GlobalContext';
 import { setPageData } from '../store/slices/organizationsSlice';
 import { setSearchValue } from '../store/slices/searchSlice';
 import { useEffect, useState } from 'react';
@@ -76,10 +72,6 @@ export default function HomePage({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { organizations, details, pageState, search } = data;
-  const context: IGlobalContext = {
-    isLoadingDetails: false,
-    isLoadingItems: false,
-  };
   const [isLoadingDetails, setIsLoadingDetails] = useState(true);
 
   useEffect(() => setIsLoadingDetails(false), [details]);
@@ -91,23 +83,18 @@ export default function HomePage({
       </Head>
       <ErrorBoundary>
         <Provider store={store}>
-          <GlobalContextProvider value={context}>
-            <OrganizationsBar
-              search={search}
-              organizations={organizations}
-              pageState={pageState}
-              selectedDetailsUid={details?.uid}
-              setIsLoadingDetails={setIsLoadingDetails}
-            />
-            {details || isLoadingDetails ? (
-              <OrganizationDetails
-                isLoading={isLoadingDetails}
-                data={details}
-              />
-            ) : (
-              <></>
-            )}
-          </GlobalContextProvider>
+          <OrganizationsBar
+            search={search}
+            organizations={organizations}
+            pageState={pageState}
+            selectedDetailsUid={details?.uid}
+            setIsLoadingDetails={setIsLoadingDetails}
+          />
+          {details || isLoadingDetails ? (
+            <OrganizationDetails isLoading={isLoadingDetails} data={details} />
+          ) : (
+            <></>
+          )}
         </Provider>
       </ErrorBoundary>
     </>

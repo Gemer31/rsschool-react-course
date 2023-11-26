@@ -43,7 +43,7 @@ export default function PagesBar({
     <div className={classes.pagesBar}>
       <div className={classes.pagesBar__state}>
         <button
-          role="nextPageButton"
+          role="prev-page-button"
           type="button"
           disabled={pageState?.firstPage}
           className="button"
@@ -51,9 +51,11 @@ export default function PagesBar({
         >
           <div className={classes.pagesBar__icon + ' arrow'} />
         </button>
-        <span className={classes.pagesBar__page}>{pageState?.pageNumber}</span>
+        <span role="page-number" className={classes.pagesBar__page}>
+          {pageState?.pageNumber}
+        </span>
         <button
-          role="prevPageButton"
+          role="next-page-button"
           type="button"
           disabled={pageState?.lastPage}
           className="button"

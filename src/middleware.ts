@@ -12,8 +12,8 @@ export default function middleware(request: NextRequest): NextResponse {
 
   if (isHaveDefaultQuery) {
     !page && url.searchParams.set('pageNumber', '1');
-    !search && url.searchParams.set('search', '');
     !pageSize && url.searchParams.set('pageSize', '10');
+    !search && url.searchParams.set('search', '');
     return NextResponse.redirect(url);
   }
 

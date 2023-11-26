@@ -65,5 +65,6 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'import/order': 'off',
     'jsx-a11y/control-has-associated-label': 'off',
+    'global-require': 'off',
   },
 };

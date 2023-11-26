@@ -18,7 +18,7 @@ export default function ErrorMessage({
       >
         {message}
       </span>
-      <Link href="/" onClick={() => callback?.()}>
+      <Link role="go-back-button" href="/" onClick={() => callback?.()}>
         Go Home
       </Link>
     </main>
