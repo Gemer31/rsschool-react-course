@@ -17,7 +17,7 @@ export default function OrganizationDetails({
   const { query } = router;
 
   const convertKeyToInfoFormat = (key: string): string => {
-    const copyKey = key[0].toUpperCase() + key.slice(1);
+    const copyKey: string = key[0].toUpperCase() + key.slice(1);
     let result = '';
     [...copyKey].forEach((char: string) => {
       result += char === char.toUpperCase() ? ' ' + char : char;
@@ -61,10 +61,10 @@ export default function OrganizationDetails({
                   <span
                     role="detailsValue"
                     className={
-                      data[dataKey] ? classes.organizationDetails__infoTrue : ''
+                      data[dataKey as keyof IOrganization] ? classes.organizationDetails__infoTrue : ''
                     }
                   >
-                    {data[dataKey] ? 'Yes' : 'No'}
+                    {data[dataKey as keyof IOrganization] ? 'Yes' : 'No'}
                   </span>
                 </div>
               )

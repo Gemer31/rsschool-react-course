@@ -66,5 +66,13 @@ module.exports = {
     'import/order': 'off',
     'jsx-a11y/control-has-associated-label': 'off',
     'global-require': 'off',
+    'no-children-prop': 'off',
+    'no-extraneous-dependencies': 'off',
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        'projectDependencies': false,
+      },
+    ],
   },
 };

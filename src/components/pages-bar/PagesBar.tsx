@@ -19,12 +19,14 @@ export default function PagesBar({
   const changePage = (type: '+' | '-'): void => {
     changePageClickCallback();
     const newPage: number =
-      type === '+' ? pageState.pageNumber + 1 : pageState.pageNumber - 1;
+      type === '+'
+        ? Number(pageState.pageNumber) + 1
+        : Number(pageState.pageNumber) - 1;
     router.push({
       query: {
         ...query,
         pageNumber: newPage,
-        pageSize: pageState.pageSize as string,
+        pageSize: String(pageState.pageSize),
       },
     });
   };
@@ -72,7 +74,7 @@ export default function PagesBar({
           min={1}
           value={size}
           onInput={(event) =>
-            setSize((event.target as HTMLInputElement).value as number)
+            setSize(Number((event.target as HTMLInputElement).value))
           }
         />
         <button

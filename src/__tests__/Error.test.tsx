@@ -9,7 +9,7 @@ beforeAll(() => {
 
 describe('Tests for the Error components', async () => {
   it('Render Error Boundary', async () => {
-    render(<ErrorBoundary />);
+    render(<ErrorBoundary>{}</ErrorBoundary>);
 
     waitFor(() => {
       expect(screen.getByText('Error boundary triggered')).toBeInTheDocument();

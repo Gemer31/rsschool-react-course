@@ -1,12 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IOrganization } from '../../models/organization.model';
+import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 
 export interface ISearchState {
   value: string;
-  result: IOrganization;
+  result: IOrganization | null;
 }
 
-export const searchSlice = createSlice<ISearchState>({
+export const searchSlice = createSlice<
+  ISearchState,
+  SliceCaseReducers<ISearchState>
+>({
   name: 'search',
   initialState: {
     value: '',

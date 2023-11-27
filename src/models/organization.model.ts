@@ -20,6 +20,10 @@ export interface IOrganizationsResponse {
   page: IPage;
 }
 
+export interface IOrganizationResponse {
+  organization: IOrganization;
+}
+
 export interface IPage {
   firstPage?: boolean;
   lastPage?: boolean;

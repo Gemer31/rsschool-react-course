@@ -1,12 +1,17 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  IOrganization,
+  IOrganizationResponse,
   IOrganizationsResponse,
 } from '../models/organization.model';
 import { setOrganizations } from '../store/slices/organizationsSlice';
 import { setOrganizationDetails } from '../store/slices/organizationDetailsSlice';
 import { setSearchResult } from '../store/slices/searchSlice';
 
+export interface IFetchOrganizationsProps {
+  pageNumber: number;
+  pageSize: number;
+  search: string;
+}
 export const organizationAPI = createApi({
   reducerPath: 'organizationAPI',
   baseQuery: fetchBaseQuery({
@@ -15,9 +20,9 @@ export const organizationAPI = createApi({
   endpoints: (build) => ({
     fetchOrganizations: build.query<
       IOrganizationsResponse,
-      { pageNumber: number; pageSize: number }
+      IFetchOrganizationsProps
     >({
-      query: (params: { pageNumber: number; pageSize: number }) => ({
+      query: (params: IFetchOrganizationsProps) => ({
         url: '/search',
         params: {
           pageNumber: params.pageNumber - 1,
@@ -30,14 +35,14 @@ export const organizationAPI = createApi({
           setOrganizations({
             page: {
               ...response.data.page,
-              pageNumber: response.data.page.pageNumber + 1,
+              pageNumber: Number(response.data.page.pageNumber) + 1,
             },
             organizations: response.data.organizations,
           })
         );
       },
     }),
-    fetchOrganizationBySearch: build.query<IOrganizationsResponse, string>({
+    fetchOrganizationBySearch: build.query<IOrganizationResponse, string>({
       query: (uid: string) => ({
         url: '/',
         params: {
@@ -45,12 +50,11 @@ export const organizationAPI = createApi({
         },
       }),
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
-        const response: { data: { organization: IOrganization } } =
-          await queryFulfilled;
+        const response: { data: IOrganizationResponse } = await queryFulfilled;
         dispatch(setSearchResult(response.data.organization));
       },
     }),
-    fetchOrganizationDetails: build.query<IOrganizationsResponse, string>({
+    fetchOrganizationDetails: build.query<IOrganizationResponse, string>({
       query: (uid: string) => ({
         url: '/',
         params: {
@@ -58,8 +62,7 @@ export const organizationAPI = createApi({
         },
       }),
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
-        const response: { data: { organization: IOrganization } } =
-          await queryFulfilled;
+        const response: { data: IOrganizationResponse } = await queryFulfilled;
         dispatch(setOrganizationDetails(response.data.organization));
       },
     }),

@@ -11,10 +11,10 @@ interface ISearchProps {
 export default function Search({ data, searchClickCallback }: ISearchProps) {
   const router = useRouter();
   const { query } = router;
-  const input = useRef();
+  const input = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (data?.value) {
+    if (data?.value && input.current) {
       input.current.value = data.value;
     }
   });
@@ -45,7 +45,7 @@ export default function Search({ data, searchClickCallback }: ISearchProps) {
         className={`${classes.search__formButton} button`}
         onClick={(event) => {
           event.preventDefault();
-          searchClick(input.current.value);
+          searchClick(input?.current?.value as string);
         }}
       >
         Search

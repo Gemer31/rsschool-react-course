@@ -12,66 +12,81 @@ import {
 } from '../services/OrganizationService';
 import OrganizationDetails from '../components/organization-details/OrganizationDetails';
 import { setPageData } from '../store/slices/organizationsSlice';
-import { setSearchValue } from '../store/slices/searchSlice';
+import {ISearchState, setSearchValue} from '../store/slices/searchSlice';
 import { useEffect, useState } from 'react';
+import {IOrganization, IPage} from "../models/organization.model";
 
-export const getServerSideProps: GetServerSideProps<unknown> =
-  wrapper.getServerSideProps((storeProp) => async (context) => {
-    const { pageNumber, pageSize, search, uid } = context.query;
+interface SSPropsData {
+  pageState: IPage;
+  organizations: IOrganization[]
+  details: IOrganization,
+  search: ISearchState,
+}
+export const getServerSideProps: GetServerSideProps<{
+  [key: string]: unknown;
+}> = wrapper.getServerSideProps((storeProp) => async (context) => {
+  const pageNumber: number = Number(context.query.pageNumber);
+  const pageSize: number = Number(context.query.pageSize);
+  const search: string = context.query.search as string;
+  const uid: string = context.query.uid as string;
 
-    const initPageNumber: number = +pageNumber > 0 ? +pageNumber : 1;
-    const initPageSize: number = +pageSize || 10;
+  const initPageNumber: number = +pageNumber > 0 ? +pageNumber : 1;
+  const initPageSize: number = +pageSize || 10;
 
-    let state = storeProp.getState();
+  let state = storeProp.getState();
 
-    if (!state.organizations.page[initPageNumber] && !search) {
-      storeProp.dispatch(
-        fetchOrganizations.initiate({
-          pageNumber: initPageNumber,
-          pageSize: initPageSize,
-          search: search?.toString() || '',
-        })
-      );
-    }
-    if (search) {
-      storeProp.dispatch(fetchOrganizationBySearch.initiate(search));
-      storeProp.dispatch(setSearchValue(search));
-      storeProp.dispatch(
-        setPageData({
-          pageNumber: 1,
-          pageSize: initPageSize,
-          firstPage: true,
-          lastPage: true,
-        })
-      );
-    }
-    if (uid) {
-      storeProp.dispatch(fetchOrganizationDetails.initiate(uid));
-    }
+  if (!state.organizations.page[initPageNumber] && !search) {
+    storeProp.dispatch(
+      fetchOrganizations.initiate({
+        pageNumber: initPageNumber,
+        pageSize: initPageSize,
+        search: search?.toString() || '',
+      })
+    );
+  }
+  if (search) {
+    storeProp.dispatch(fetchOrganizationBySearch.initiate(search));
+    storeProp.dispatch(setSearchValue(search));
+    storeProp.dispatch(
+      setPageData({
+        pageNumber: 1,
+        pageSize: initPageSize,
+        firstPage: true,
+        lastPage: true,
+      })
+    );
+  }
+  if (uid) {
+    storeProp.dispatch(fetchOrganizationDetails.initiate(uid));
+  }
 
-    await Promise.all(storeProp.dispatch(getRunningQueriesThunk()));
+  await Promise.all(storeProp.dispatch(getRunningQueriesThunk()));
 
-    state = storeProp.getState();
+  state = storeProp.getState();
 
-    return {
-      props: {
-        data: {
-          pageState: state.organizations.pageState,
-          organizations:
-            state.organizations.page?.[
-              state.organizations.pageState.pageNumber
-            ] || null,
-          details: state.organizationDetails.details,
-          search: state.search,
-        },
+  return {
+    props: {
+      data: {
+        pageState: state.organizations.pageState,
+        organizations:
+          state.organizations.page?.[
+            state.organizations.pageState.pageNumber || 0
+          ] || null,
+        details: state.organizationDetails.details,
+        search: state.search,
       },
-    };
-  });
+    },
+  };
+});
 
 export default function HomePage({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { organizations, details, pageState, search } = data;
+  const sspData: SSPropsData = data as SSPropsData;
+  const organizations: IOrganization[] = sspData.organizations;
+  const details: IOrganization = sspData.details;
+  const pageState: IPage = sspData.pageState;
+  const search: ISearchState = sspData.search;
   const [isLoadingDetails, setIsLoadingDetails] = useState(true);
 
   useEffect(() => setIsLoadingDetails(false), [details]);

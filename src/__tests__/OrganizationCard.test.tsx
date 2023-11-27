@@ -19,6 +19,7 @@ describe('Card component', () => {
       <RouterContext.Provider value={router}>
         <OrganizationsList
           isLoading={false}
+          selectedOrganizationUid=""
           data={mockOrganizations.organizations}
           linkClickCallback={() => {}}
         />
@@ -36,6 +37,7 @@ describe('Card component', () => {
       <RouterContext.Provider value={router}>
         <OrganizationsList
           isLoading={false}
+          selectedOrganizationUid=""
           data={mockOrganizations.organizations}
           linkClickCallback={() => {}}
         />

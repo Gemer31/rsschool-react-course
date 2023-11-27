@@ -4,6 +4,7 @@ import {
   IOrganizationsResponse,
   IPage,
 } from '../../models/organization.model';
+import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 
 interface IOrganizationsState {
   isLoading: boolean;
@@ -13,7 +14,10 @@ interface IOrganizationsState {
   };
 }
 
-export const organizationsSlice = createSlice<IOrganizationsState>({
+export const organizationsSlice = createSlice<
+  IOrganizationsState,
+  SliceCaseReducers<IOrganizationsState>
+>({
   name: 'organizations',
   initialState: {
     isLoading: true,
@@ -26,9 +30,12 @@ export const organizationsSlice = createSlice<IOrganizationsState>({
     page: {},
   },
   reducers: {
-    setOrganizations(state, action: PayloadAction<IOrganizationsResponse>) {
+    setOrganizations(
+      state: IOrganizationsState,
+      action: PayloadAction<IOrganizationsResponse>
+    ) {
       if (action.payload) {
-        state.page[action.payload.page.pageNumber] =
+        state.page[action.payload.page.pageNumber || 0] =
           action.payload.organizations;
         state.pageState = action.payload.page;
       } else {
@@ -36,14 +43,19 @@ export const organizationsSlice = createSlice<IOrganizationsState>({
       }
       state.isLoading = false;
     },
-    setOrganizationsLoading(state, action: PayloadAction<boolean>) {
+    setOrganizationsLoading(
+      state: IOrganizationsState,
+      action: PayloadAction<boolean>
+    ) {
       state.isLoading = action.payload;
     },
-    setPageData(state, action: PayloadAction<IPage>) {
-      state.pageNumber = action.payload.pageNumber || state.pageNumber;
-      state.pageSize = action.payload.pageSize || state.pageSize;
-      state.firstPage = action.payload.firstPage;
-      state.lastPage = action.payload.lastPage;
+    setPageData(state: IOrganizationsState, action: PayloadAction<IPage>) {
+      state.pageState.pageNumber =
+        action.payload.pageNumber || state.pageState.pageNumber;
+      state.pageState.pageSize =
+        action.payload.pageSize || state.pageState.pageSize;
+      state.pageState.firstPage = action.payload.firstPage;
+      state.pageState.lastPage = action.payload.lastPage;
     },
   },
 });
