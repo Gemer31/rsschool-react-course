@@ -31,7 +31,7 @@ describe('Page bur component', () => {
     expect(router.push).toBeCalledWith({
       query: {
         pageNumber: mockPageState.pageNumber + 1,
-        pageSize: mockPageState.pageSize,
+        pageSize: String(mockPageState.pageSize),
       },
     });
   });
