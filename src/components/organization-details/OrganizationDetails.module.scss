@@ -1,0 +1,44 @@
+@import '../../styles/colors';
+
+.organizationDetails {
+  width: 60%;
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  position: relative;
+  padding: 0 2rem;
+
+  &__cross {
+    width: 20px;
+    height: 20px;
+    background-image: url('../../../public/icons/cross.svg');
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+
+  &__title {
+    color: $salmon;
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 4rem;
+  }
+
+  &__info {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    &True {
+      color: $salmon;
+      font-weight: bold;
+    }
+  }
+}
+
+.loading {
+  justify-content: center;
+}

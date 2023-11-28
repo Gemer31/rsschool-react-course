@@ -1,0 +1,30 @@
+.pagesBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__page {
+    margin: 0 8px;
+  }
+
+  &__state {
+    display: flex;
+    align-items: center;
+  }
+
+  &__form {
+    display: flex;
+    align-items: center;
+
+    &Field {
+      width: 50px;
+      margin-right: 8px;
+    }
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+    fill: white;
+  }
+}

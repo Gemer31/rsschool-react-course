@@ -1,0 +1,38 @@
+@import '../../styles/colors';
+
+.organizationsList {
+  background-color: white;
+  height: 100%;
+  border-radius: 1em;
+  padding: 12px;
+  overflow: auto;
+
+  &Item {
+    padding: 6px 8px;
+    border-radius: 1.25em;
+    display: block;
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      background-color: $cornflower-lilac;
+      cursor: pointer;
+    }
+  }
+}
+
+.active {
+  background-color: $cornflower-lilac;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,12 @@
+.errorMessage {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &__message {
+    margin-bottom: 4px;
+  }
+}

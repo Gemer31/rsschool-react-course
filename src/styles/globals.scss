@@ -1,0 +1,40 @@
+@import 'colors';
+@import 'icons';
+
+html {
+  height: 100%;
+}
+
+body {
+  font-size: 16px;
+  font-family: Roboto, sans-serif;
+  height: 100%;
+  margin: 0;
+}
+
+body > div {
+  display: flex;
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  height: 100%;
+}
+
+.input,
+.button {
+  font: inherit;
+  border: 0;
+  outline: 0;
+  border-radius: 5em;
+  box-sizing: border-box;
+}
+
+.button {
+  cursor: pointer;
+}
+
+.rotate {
+  transform: rotateZ(180deg);
+}

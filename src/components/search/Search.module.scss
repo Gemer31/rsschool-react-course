@@ -1,0 +1,63 @@
+@import '../../styles/colors';
+
+.search {
+  &__form {
+    height: 3em;
+    border-radius: 2em;
+    background-color: white;
+    width: 80%;
+    padding: 4px;
+    box-sizing: border-box;
+    box-shadow: 0 0.125em 0.3125em rgba(0, 0, 0, 0.3);
+    display: flex;
+
+    &Input {
+      border-radius: 18px;
+      font-size: 1em;
+      color: $your-pink;
+      height: 100%;
+      width: 100%;
+      padding: 0 0.714em;
+      border: white;
+
+      &:focus {
+        border: white;
+      }
+
+      &::placeholder {
+        color: currentColor;
+      }
+
+      &:required:valid {
+        color: $salmon;
+
+        + .form__buttonLabel {
+          color: white;
+
+          &::before {
+            pointer-events: initial;
+          }
+        }
+      }
+    }
+
+    &Button {
+      color: white;
+      font-weight: bold;
+      width: 7em;
+      background-color: $salmon;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &._error {
+        color: black;
+        background-color: white;
+        height: fit-content;
+        width: max-content;
+        padding: 0.625em;
+      }
+    }
+  }
+}
