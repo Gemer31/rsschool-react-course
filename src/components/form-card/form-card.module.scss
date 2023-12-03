@@ -1,0 +1,64 @@
+@import '../../styles/colors';
+@import '../../styles/form';
+@import '../../styles/vars';
+
+.formCard {
+  background: white;
+  border-radius: $size-common;
+  overflow: hidden;
+  position: relative;
+
+  &__label {
+    position: absolute;
+    top: $size-s;
+    right: $size-s;
+    padding: $size-xxs $size-s $size-xs;
+    color: white;
+    background: red;
+    border-radius: $size-m;
+    transition: all $transition-duration ease;
+    animation: 2s linear infinite alternate blink;
+
+    @keyframes blink {
+      0% {
+        background: red;
+      }
+      50% {
+        background: green;
+      }
+      100% {
+        background: red;
+      }
+    }
+  }
+
+  &__img {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+
+  &Content {
+    padding: $size-s $size-s $size-m;
+  }
+
+  & p span {
+    font-weight: bold;
+  }
+}
+
+.labelHide {
+  animation: 0.5s ease-in both running hide;
+
+  @keyframes hide {
+    0% {
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+}

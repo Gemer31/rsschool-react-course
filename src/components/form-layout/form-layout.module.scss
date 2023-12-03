@@ -1,0 +1,25 @@
+@import '../../styles/vars';
+@import '../../styles/colors';
+
+.formLayout {
+  margin-top: $size-l;
+  padding: $size-xl $size-xxl;
+  border-radius: $size-common;
+  background: white;
+
+  &Header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &BackLink {
+    display: flex;
+    align-items: center;
+    color: $purple-1;
+    transition: all $transition-duration ease;
+
+    &:hover {
+      color: $purple-2;
+    }
+  }
+}

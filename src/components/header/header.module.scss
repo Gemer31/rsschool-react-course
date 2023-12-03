@@ -1,0 +1,52 @@
+@import '../../styles/vars';
+@import '../../styles/colors';
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $size-common;
+  border-bottom: 1px solid gray;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $size-l;
+  width: $size-xxl;
+  height: $size-xxl;
+  border-radius: 50%;
+  transition: all $transition-duration ease;
+  background-image: url('../../assets/form.svg');
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.button {
+  margin-left: $size-s;
+  border-radius: $size-s;
+  padding: $size-s $size-xs;
+  border: 1px solid gray;
+  background: white;
+  transition: all $transition-duration ease;
+
+  &Active {
+    opacity: 0.5;
+    cursor: default;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    color: $purple-2;
+  }
+}
