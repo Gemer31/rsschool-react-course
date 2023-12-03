@@ -1,11 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { countriesAPI } from '../services/countriesAPI.ts';
 import { dataSlice } from './slice.ts';
-import { countriesSlice } from './countriesSlice.ts';
 
 export const rootReducer = combineReducers({
   data: dataSlice.reducer,
-  countries: countriesSlice.reducer,
   [countriesAPI.reducerPath]: countriesAPI.reducer,
 });
 

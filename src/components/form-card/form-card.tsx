@@ -8,7 +8,15 @@ interface IFormCardProps {
 export const FormCard = ({ data, index }: IFormCardProps) => {
   return (
     <div className={classes.formCard}>
-      {index === 0 && <span className={`${classes.formCard__label} ${data.isNew ? '' : classes.labelHide}`}>New</span>}
+      {index === 0 && (
+        <span
+          className={`${classes.formCard__label} ${
+            data.isNew ? '' : classes.labelHide
+          }`}
+        >
+          New
+        </span>
+      )}
       <img className={classes.formCard__img} src={data.img} alt={data.name} />
       <div className={classes.formCardContent}>
         <p>

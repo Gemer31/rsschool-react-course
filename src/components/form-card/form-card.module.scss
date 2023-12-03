@@ -17,7 +17,7 @@
     background: red;
     border-radius: $size-m;
     transition: all $transition-duration ease;
-    animation: 2s linear infinite alternate blink;;
+    animation: 2s linear infinite alternate blink;
 
     @keyframes blink {
       0% {
@@ -47,9 +47,8 @@
   }
 }
 
-
 .labelHide {
-  animation: .5s ease-in both running hide;
+  animation: 0.5s ease-in both running hide;
 
   @keyframes hide {
     0% {

@@ -13,10 +13,13 @@ import { ValidationError } from 'yup';
 import { AppFields, IStateForm, ValidatingFormData } from '../../types.ts';
 import { GENDERS } from '../../data/common.ts';
 import { v4 as uuidv4 } from 'uuid';
+import { useGetCountriesQuery } from '../../services/countriesAPI.ts';
 
 export const UncontrolledForm = () => {
+  useGetCountriesQuery({});
+
   const navigate = useNavigate();
-  const { countries } = useAppSelector((state) => state.countries);
+  const { countries } = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
 
   const nameRef = useRef<HTMLInputElement>(null);

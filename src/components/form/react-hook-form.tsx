@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../store/redux-hooks.ts';
 import { useForm } from 'react-hook-form';
+import { useAppDispatch, useAppSelector } from '../../store/redux-hooks.ts';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validationSchema } from '../../utils/validation.util.ts';
 import { AppFields, IStateForm } from '../../types.ts';
@@ -13,10 +13,13 @@ import { ReactHookFormCheckbox } from '../checkbox/react-hook-form-checkbox.tsx'
 import { ReactHookFormInput } from '../input/react-hook-form-input.tsx';
 import { FormFieldsData } from '../../data/form-fields-data.ts';
 import { v4 as uuidv4 } from 'uuid';
+import { useGetCountriesQuery } from '../../services/countriesAPI.ts';
 
 export const ReactHookForm = () => {
+  useGetCountriesQuery({});
+
   const navigate = useNavigate();
-  const { countries } = useAppSelector((state) => state.countries);
+  const { countries } = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
 
   const {
@@ -112,7 +115,10 @@ export const ReactHookForm = () => {
         error={errors['acceptTC']}
       />
 
-      <input type="submit" className={`form-submit ${!isValid ? 'disabled' : ''}`} />
+      <input
+        type="submit"
+        className={`form-submit ${!isValid ? 'disabled' : ''}`}
+      />
     </form>
   );
 };

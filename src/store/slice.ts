@@ -4,14 +4,11 @@ import {
   SliceCaseReducers,
 } from '@reduxjs/toolkit';
 import { IStateForm } from '../types.ts';
+import { countriesAPI } from '../services/countriesAPI.ts';
 
 interface IDataState {
   forms: IStateForm[];
-  countries: {
-    values: string[];
-    loading: boolean;
-    error: boolean;
-  };
+  countries: string[];
 }
 
 export const dataSlice = createSlice<IDataState, SliceCaseReducers<IDataState>>(
@@ -19,11 +16,7 @@ export const dataSlice = createSlice<IDataState, SliceCaseReducers<IDataState>>(
     name: 'dataSlice',
     initialState: {
       forms: [],
-      countries: {
-        values: [],
-        loading: false,
-        error: false,
-      },
+      countries: [],
     },
     reducers: {
       addNewForm(state, action: PayloadAction<IStateForm>) {
@@ -38,31 +31,26 @@ export const dataSlice = createSlice<IDataState, SliceCaseReducers<IDataState>>(
         }
       },
     },
-    // extraReducers: (builder) => {
-    //     builder.addMatcher(
-    //         countriesAPI.endpoints.getCountries.matchPending,
-    //         (state) => {
-    //             state.countries.values = [];
-    //             state.countries.loading = true;
-    //         }
-    //     );
-    //     builder.addMatcher(
-    //         countriesAPI.endpoints.getCountries.matchFulfilled,
-    //         (state, action) => {
-    //             state.countries.values = (action.payload as ICountry);
-    //             state.countries.error = false;
-    //             state.countries.loading = false;
-    //         }
-    //     );
-    //     builder.addMatcher(
-    //         countriesAPI.endpoints.getCountries.matchRejected,
-    //         (state) => {
-    //             state.countries.values = [];
-    //             state.countries.error = true;
-    //             state.countries.loading = false;
-    //         }
-    //     );
-    // },
+    extraReducers: (builder) => {
+      builder.addMatcher(
+        countriesAPI.endpoints.getCountries.matchPending,
+        (state) => {
+          state.countries = [];
+        }
+      );
+      builder.addMatcher(
+        countriesAPI.endpoints.getCountries.matchFulfilled,
+        (state, action) => {
+          state.countries = action.payload.map((item) => item.name.common);
+        }
+      );
+      builder.addMatcher(
+        countriesAPI.endpoints.getCountries.matchRejected,
+        (state) => {
+          state.countries = [];
+        }
+      );
+    },
   }
 );
 
