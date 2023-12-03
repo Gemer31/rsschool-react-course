@@ -9,7 +9,7 @@ export const UncontrolledSelect = (props: FormInputProps) => {
 
   return (
     <div className="input">
-      <div className="input-content">
+      <div className="input-field">
         <label className="input-label" htmlFor={id}>
           {label}
         </label>

@@ -137,7 +137,7 @@ export const UncontrolledForm = () => {
         error={errors['acceptTC']}
       />
 
-      <input type="submit" className="form__submit" />
+      <input type="submit" className="form-submit" />
     </form>
   );
 };

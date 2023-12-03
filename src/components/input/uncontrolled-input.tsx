@@ -11,7 +11,7 @@ export const UncontrolledInput = ({
 }: UncontrolledFieldProps) => {
   return (
     <div className="input">
-      <div className="input-content">
+      <div className="input-field">
         {type !== 'checkbox' && (
           <label className="input-label" htmlFor={id}>
             {label}

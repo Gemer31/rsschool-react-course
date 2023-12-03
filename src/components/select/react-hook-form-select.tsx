@@ -15,12 +15,12 @@ export const ReactHookFormSelect = ({
 }: IReactHookFormSelectProps) => {
   return (
     <div className="input">
-      <div className="input__content">
-        <label className="input__label" htmlFor={id}>
+      <div className="input-field">
+        <label className="input-label" htmlFor={id}>
           {label}
         </label>
         <input
-          className={`input__input ${error ? 'error' : ''}`}
+          className={`input-input ${error ? 'error' : ''}`}
           list={`${id}-browsers`}
           id={id}
           placeholder={placeholder}
@@ -35,7 +35,7 @@ export const ReactHookFormSelect = ({
           ))}
         </datalist>
       </div>
-      {error && <p className="input__error">{error.message}</p>}
+      {error && <p className="input-error">{error.message}</p>}
     </div>
   );
 };

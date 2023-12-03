@@ -2,7 +2,7 @@
 @import 'vars';
 
 .form {
-  &__submit {
+  &-submit {
     position: relative;
     width: 100%;
     padding: $size-s;
@@ -53,7 +53,7 @@
     }
   }
 
-  &__error {
+  &-error {
     padding-top: $size-xxs;
     margin: 0;
     position: absolute;

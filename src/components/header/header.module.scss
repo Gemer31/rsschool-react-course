@@ -5,9 +5,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: $size-s;
   padding: $size-common;
-  border: 1px solid gray;
+  border-bottom: 1px solid gray;
 }
 
 .logo {
@@ -29,7 +28,7 @@
 .button {
   margin-left: $size-s;
   border-radius: $size-s;
-  padding: $size-xs;
+  padding: $size-s $size-xs;
   border: 1px solid gray;
   background: white;
   transition: all $transition-duration ease;
