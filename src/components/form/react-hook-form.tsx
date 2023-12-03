@@ -22,7 +22,7 @@ export const ReactHookForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(validationSchema),
@@ -74,7 +74,6 @@ export const ReactHookForm = () => {
         register={register}
         error={errors.email}
       />
-
       <ReactHookFormInput
         {...FormFieldsData.age}
         register={register}
@@ -113,7 +112,7 @@ export const ReactHookForm = () => {
         error={errors['acceptTC']}
       />
 
-      <input type="submit" className="form-submit" />
+      <input type="submit" className={`form-submit ${!isValid ? 'disabled' : ''}`} />
     </form>
   );
 };
