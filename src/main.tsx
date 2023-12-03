@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.scss';
-import { setupStore } from './store/store.ts';
 import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { setupStore } from './store/store.ts';
 import { routes } from './router.tsx';
 
 const store = setupStore();

@@ -1,5 +1,7 @@
 import { FormEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import { ValidationError } from 'yup';
 import { useAppDispatch, useAppSelector } from '../../store/redux-hooks';
 import { convertToBase64Util } from '../../utils/convert-to-base64.util.ts';
 import { UncontrolledCheckbox } from '../checkbox/uncontrolled-checkbox';
@@ -9,13 +11,11 @@ import { RouterPage } from '../../router.tsx';
 import { addNewForm, setFormIsNew } from '../../store/slice.ts';
 import { FormFieldsData } from '../../data/form-fields-data.ts';
 import { validationSchema } from '../../utils/validation.util.ts';
-import { ValidationError } from 'yup';
 import { AppFields, IStateForm, ValidatingFormData } from '../../types.ts';
 import { GENDERS } from '../../data/common.ts';
-import { v4 as uuidv4 } from 'uuid';
 import { useGetCountriesQuery } from '../../services/countriesAPI.ts';
 
-export const UncontrolledForm = () => {
+export function UncontrolledForm() {
   useGetCountriesQuery({});
 
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ export const UncontrolledForm = () => {
 
     let isValid: boolean;
     let validatedData: AppFields | null = null;
-    let errorMessages: Record<string, string> = {};
+    const errorMessages: Record<string, string> = {};
     const formData: ValidatingFormData = {
       name: nameRef.current?.value,
       email: emailRef.current?.value,
@@ -58,11 +58,11 @@ export const UncontrolledForm = () => {
       });
       isValid = true;
       validatedData = validatedForm;
-    } catch (e) {
-      if (e instanceof ValidationError) {
-        e.inner.forEach((error) => {
-          if (typeof error.path === 'string') {
-            errorMessages[error.path] = error.message;
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        error.inner.forEach((item) => {
+          if (typeof item.path === 'string') {
+            errorMessages[item.path] = item.message;
           }
         });
       }
@@ -106,52 +106,52 @@ export const UncontrolledForm = () => {
       <UncontrolledInput
         {...FormFieldsData.name}
         fieldRef={nameRef}
-        error={errors['name']}
+        error={errors.name}
       />
       <UncontrolledInput
         {...FormFieldsData.email}
         fieldRef={emailRef}
-        error={errors['email']}
+        error={errors.email}
       />
       <UncontrolledInput
         {...FormFieldsData.age}
         fieldRef={ageRef}
-        error={errors['age']}
+        error={errors.age}
       />
       <UncontrolledSelect
         {...FormFieldsData.gender}
         data={GENDERS}
         fieldRef={genderRef}
-        error={errors['gender']}
+        error={errors.gender}
       />
       <UncontrolledInput
         {...FormFieldsData.password}
         fieldRef={passwordRef}
-        error={errors['password']}
+        error={errors.password}
       />
       <UncontrolledInput
         {...FormFieldsData.passwordRepeat}
         fieldRef={passwordRepeatRef}
-        error={errors['passwordRepeat']}
+        error={errors.passwordRepeat}
       />
       <UncontrolledSelect
         {...FormFieldsData.countries}
         data={countries}
         fieldRef={countryRef}
-        error={errors['country']}
+        error={errors.country}
       />
       <UncontrolledInput
         {...FormFieldsData.img}
         fieldRef={imgRef}
-        error={errors['img']}
+        error={errors.img}
       />
       <UncontrolledCheckbox
         {...FormFieldsData.acceptTC}
         fieldRef={acceptTCRef}
-        error={errors['acceptTC']}
+        error={errors.acceptTC}
       />
 
       <input type="submit" className="form-submit" />
     </form>
   );
-};
+}

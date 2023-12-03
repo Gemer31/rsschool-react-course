@@ -4,7 +4,7 @@ import classes from './form-layout.module.scss';
 import { RouterPage } from '../../router.tsx';
 
 type IFormLayoutProps = { title: string } & CommonReactProps;
-export const FormLayout = ({ title, children }: IFormLayoutProps) => {
+export function FormLayout({ title, children }: IFormLayoutProps) {
   return (
     <section className={classes.formLayout}>
       <div className={classes.formLayoutHeader}>
@@ -16,4 +16,4 @@ export const FormLayout = ({ title, children }: IFormLayoutProps) => {
       {children}
     </section>
   );
-};
+}

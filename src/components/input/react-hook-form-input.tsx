@@ -1,6 +1,6 @@
 import { ReackHookFieldProps } from '../../types';
 
-export const ReactHookFormInput = ({
+export function ReactHookFormInput({
   type,
   id,
   label,
@@ -8,7 +8,7 @@ export const ReactHookFormInput = ({
   formKey,
   error,
   register,
-}: ReackHookFieldProps) => {
+}: ReackHookFieldProps) {
   return (
     <div className="input">
       <div className="input-field">
@@ -34,4 +34,4 @@ export const ReactHookFormInput = ({
       {error && <p className="input-error">{error.message}</p>}
     </div>
   );
-};
+}

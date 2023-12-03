@@ -4,7 +4,7 @@ interface FormInputProps extends UncontrolledFieldProps {
   data: string[];
 }
 
-export const UncontrolledSelect = (props: FormInputProps) => {
+export function UncontrolledSelect(props: FormInputProps) {
   const { name, id, label, placeholder, data, error, fieldRef } = props;
 
   return (
@@ -33,4 +33,4 @@ export const UncontrolledSelect = (props: FormInputProps) => {
       {error && <p className="input-error">{error}</p>}
     </div>
   );
-};
+}

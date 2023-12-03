@@ -1,6 +1,6 @@
 import { UncontrolledFieldProps } from '../../types.ts';
 
-export const UncontrolledInput = ({
+export function UncontrolledInput({
   name,
   type,
   id,
@@ -8,7 +8,7 @@ export const UncontrolledInput = ({
   placeholder,
   error,
   fieldRef,
-}: UncontrolledFieldProps) => {
+}: UncontrolledFieldProps) {
   return (
     <div className="input">
       <div className="input-field">
@@ -35,4 +35,4 @@ export const UncontrolledInput = ({
       {error && <p className="input-error">{error}</p>}
     </div>
   );
-};
+}

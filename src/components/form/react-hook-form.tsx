@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../store/redux-hooks.ts';
+import { v4 as uuidv4 } from 'uuid';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useAppDispatch, useAppSelector } from '../../store/redux-hooks.ts';
 import { validationSchema } from '../../utils/validation.util.ts';
 import { AppFields, IStateForm } from '../../types.ts';
 import { RouterPage } from '../../router.tsx';
@@ -12,10 +13,9 @@ import { GENDERS } from '../../data/common.ts';
 import { ReactHookFormCheckbox } from '../checkbox/react-hook-form-checkbox.tsx';
 import { ReactHookFormInput } from '../input/react-hook-form-input.tsx';
 import { FormFieldsData } from '../../data/form-fields-data.ts';
-import { v4 as uuidv4 } from 'uuid';
 import { useGetCountriesQuery } from '../../services/countriesAPI.ts';
 
-export const ReactHookForm = () => {
+export function ReactHookForm() {
   useGetCountriesQuery({});
 
   const navigate = useNavigate();
@@ -102,7 +102,7 @@ export const ReactHookForm = () => {
         {...FormFieldsData.countries}
         data={countries}
         register={register}
-        error={errors['country']}
+        error={errors.country}
       />
       <ReactHookFormInput
         {...FormFieldsData.img}
@@ -112,7 +112,7 @@ export const ReactHookForm = () => {
       <ReactHookFormCheckbox
         {...FormFieldsData.acceptTC}
         register={register}
-        error={errors['acceptTC']}
+        error={errors.acceptTC}
       />
 
       <input
@@ -121,4 +121,4 @@ export const ReactHookForm = () => {
       />
     </form>
   );
-};
+}

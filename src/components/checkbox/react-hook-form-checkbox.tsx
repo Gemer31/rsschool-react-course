@@ -1,6 +1,6 @@
 import { ReackHookFieldProps } from '../../types';
 
-export const ReactHookFormCheckbox = ({
+export function ReactHookFormCheckbox({
   type,
   id,
   label,
@@ -8,7 +8,7 @@ export const ReactHookFormCheckbox = ({
   formKey,
   error,
   register,
-}: ReackHookFieldProps) => {
+}: ReackHookFieldProps) {
   return (
     <div className="checkbox">
       <div className="checkbox-field">
@@ -26,4 +26,4 @@ export const ReactHookFormCheckbox = ({
       {error && <p className="input-error">{error.message}</p>}
     </div>
   );
-};
+}

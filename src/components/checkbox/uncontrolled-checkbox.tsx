@@ -1,6 +1,6 @@
 import { UncontrolledFieldProps } from '../../types.ts';
 
-export const UncontrolledCheckbox = ({
+export function UncontrolledCheckbox({
   name,
   type,
   id,
@@ -8,7 +8,7 @@ export const UncontrolledCheckbox = ({
   placeholder,
   error,
   fieldRef,
-}: UncontrolledFieldProps) => {
+}: UncontrolledFieldProps) {
   return (
     <div className="checkbox">
       <div className="checkbox-field">
@@ -29,4 +29,4 @@ export const UncontrolledCheckbox = ({
       {error && <p className="input-error">{error}</p>}
     </div>
   );
-};
+}

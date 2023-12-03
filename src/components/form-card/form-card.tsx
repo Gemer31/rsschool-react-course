@@ -5,7 +5,7 @@ interface IFormCardProps {
   data: IStateForm;
   index: number;
 }
-export const FormCard = ({ data, index }: IFormCardProps) => {
+export function FormCard({ data, index }: IFormCardProps) {
   return (
     <div className={classes.formCard}>
       {index === 0 && (
@@ -38,9 +38,9 @@ export const FormCard = ({ data, index }: IFormCardProps) => {
           <span>Password:</span> {data.password}
         </p>
         <p>
-          <span>{'T&C:'}</span> {String(data.acceptTC)}
+          <span>T&C:</span> {String(data.acceptTC)}
         </p>
       </div>
     </div>
   );
-};
+}

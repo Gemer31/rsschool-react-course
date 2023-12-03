@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import classes from './header.module.scss';
 import { RouterPage } from '../../router.tsx';
 
-export const Header = () => {
+export function Header() {
   const getLinkClass = (isActive: boolean) =>
     [classes.button, isActive ? classes.buttonActive : ''].join(' ');
 
@@ -26,4 +26,4 @@ export const Header = () => {
       </nav>
     </header>
   );
-};
+}

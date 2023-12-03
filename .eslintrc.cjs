@@ -53,5 +53,11 @@ module.exports = {
     'react/no-did-update-set-state': 'off',
     'no-console': 'off',
     'class-methods-use-this': 'off',
+    'import/prefer-default-export': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'import/extensions': 'off',
+    'import/no-cycle': 'off',
+    'react/no-array-index-key': 'off',
+    'no-param-reassign': 'off',
   },
 };

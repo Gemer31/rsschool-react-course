@@ -4,7 +4,7 @@ interface IReactHookFormSelectProps extends ReackHookFieldProps {
   data: string[];
 }
 
-export const ReactHookFormSelect = ({
+export function ReactHookFormSelect({
   id,
   label,
   placeholder,
@@ -12,7 +12,7 @@ export const ReactHookFormSelect = ({
   formKey,
   error,
   register,
-}: IReactHookFormSelectProps) => {
+}: IReactHookFormSelectProps) {
   return (
     <div className="input">
       <div className="input-field">
@@ -38,4 +38,4 @@ export const ReactHookFormSelect = ({
       {error && <p className="input-error">{error.message}</p>}
     </div>
   );
-};
+}
