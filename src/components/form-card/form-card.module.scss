@@ -1,0 +1,36 @@
+@import "../../styles/colors";
+@import "../../styles/form";
+@import "../../styles/vars";
+
+.formCard {
+  background: white;
+  border-radius: $size-common;
+  overflow: hidden;
+  position: relative;
+
+  &__label {
+    position: absolute;
+    top: $size-s;
+    right: $size-s;
+    padding: $size-xxs $size-s $size-xs;
+    color: white;
+    background: red;
+    border-radius: $size-m;
+  }
+
+  &__img {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+
+  &Content {
+    padding: $size-s $size-s $size-m;
+  }
+
+  & p {
+    & span {
+      font-weight: 600;
+    }
+  }
+}

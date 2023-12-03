@@ -1,0 +1,102 @@
+@import "colors";
+@import "vars";
+
+.form {
+  &__passwords {
+    margin: 10px 0 20px;
+  }
+
+  &__submit {
+    position: relative;
+    width: 100%;
+    padding: $size-s;
+    color: white;
+    margin-top: $size-m;
+    border: none;
+    border-radius: $size-s;
+    background: $purple-1;
+    cursor: pointer;
+    transition: all $transition-duration ease;
+
+    &:hover {
+      background: $purple-2;
+    }
+  }
+}
+
+.input {
+  position: relative;
+  margin-bottom: 20px;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__label {
+    font-size: 13px;
+    line-height: $size-l;
+    cursor: pointer;
+
+    &::after {
+      content: '*';
+      margin-left: $size-xxs;
+      font-size: 16px;
+      font-weight: 600;
+      color: red;
+    }
+  }
+
+  &__input {
+    padding: 10px 12px;
+    border-radius: $size-xs;
+    border: 1.5px solid;
+    border-color: $gray-1;
+
+    &.error {
+      border-color: red;
+    }
+  }
+
+  &__error {
+    padding-top: $size-xxs;
+    margin: 0;
+    position: absolute;
+    font-size: 13px;
+    color: red;
+    font-weight: 600;
+    line-height: 1;
+  }
+}
+
+.checkbox {
+  margin-bottom: 10px;
+
+  &__content {
+    display: flex;
+  }
+
+  &__label {
+    font-size: 13px;
+    cursor: pointer;
+
+    &::after {
+      content: '*';
+      margin-left: $size-xxs;
+      font-size: 16px;
+      font-weight: 600;
+      color: red;
+    }
+  }
+
+  &__input {
+    margin-right: 5px;
+    cursor: pointer;
+  }
+}
+
+.select {
+  padding: $size-s;
+  border-radius: $size-xs;
+  border: 1.5px solid #d8d6de;
+}
