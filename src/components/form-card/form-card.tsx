@@ -3,11 +3,12 @@ import classes from './form-card.module.scss';
 
 interface IFormCardProps {
   data: IStateForm;
+  index: number;
 }
-export const FormCard = ({ data }: IFormCardProps) => {
+export const FormCard = ({ data, index }: IFormCardProps) => {
   return (
     <div className={classes.formCard}>
-      {data.isNew && <span className={classes.formCard__label}>New</span>}
+      {index === 0 && <span className={`${classes.formCard__label} ${data.isNew ? '' : classes.labelHide}`}>New</span>}
       <img className={classes.formCard__img} src={data.img} alt={data.name} />
       <div className={classes.formCardContent}>
         <p>

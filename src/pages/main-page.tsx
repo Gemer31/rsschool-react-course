@@ -12,7 +12,7 @@ export function MainPage() {
       )}
       <div className="forms-list">
         {forms.map((item, index) => (
-          <FormCard data={item} key={index} />
+          <FormCard data={item} key={index} index={index}/>
         ))}
       </div>
     </section>

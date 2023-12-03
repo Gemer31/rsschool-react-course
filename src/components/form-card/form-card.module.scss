@@ -16,6 +16,20 @@
     color: white;
     background: red;
     border-radius: $size-m;
+    transition: all $transition-duration ease;
+    animation: 2s linear infinite alternate blink;;
+
+    @keyframes blink {
+      0% {
+        background: red;
+      }
+      50% {
+        background: green;
+      }
+      100% {
+        background: red;
+      }
+    }
   }
 
   &__img {
@@ -30,5 +44,22 @@
 
   & p span {
     font-weight: bold;
+  }
+}
+
+
+.labelHide {
+  animation: .5s ease-in both running hide;
+
+  @keyframes hide {
+    0% {
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(0);
+    }
   }
 }
