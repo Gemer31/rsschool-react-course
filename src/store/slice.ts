@@ -3,11 +3,10 @@ import {
   PayloadAction,
   SliceCaseReducers,
 } from '@reduxjs/toolkit';
-import { IForm } from '../types.ts';
-import { STUB_FORMS_DATA } from '../data/common.ts';
+import { IStateForm } from '../types.ts';
 
 interface IDataState {
-  forms: IForm[];
+  forms: IStateForm[];
   countries: {
     values: string[];
     loading: boolean;
@@ -19,7 +18,7 @@ export const dataSlice = createSlice<IDataState, SliceCaseReducers<IDataState>>(
   {
     name: 'dataSlice',
     initialState: {
-      forms: STUB_FORMS_DATA,
+      forms: [],
       countries: {
         values: [],
         loading: false,
@@ -27,8 +26,16 @@ export const dataSlice = createSlice<IDataState, SliceCaseReducers<IDataState>>(
       },
     },
     reducers: {
-      addNewForm(state, action: PayloadAction<IForm>) {
+      addNewForm(state, action: PayloadAction<IStateForm>) {
         state.forms.unshift(action.payload);
+      },
+      setFormIsNew(state, action: PayloadAction<IStateForm>) {
+        const formData = state.forms.find(
+          (item) => item.id === action.payload.id
+        );
+        if (formData) {
+          formData.isNew = action.payload.isNew;
+        }
       },
     },
     // extraReducers: (builder) => {
@@ -59,4 +66,4 @@ export const dataSlice = createSlice<IDataState, SliceCaseReducers<IDataState>>(
   }
 );
 
-export const { addNewForm } = dataSlice.actions;
+export const { addNewForm, setFormIsNew } = dataSlice.actions;

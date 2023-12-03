@@ -6,12 +6,13 @@ import { UncontrolledCheckbox } from '../checkbox/uncontrolled-checkbox';
 import { UncontrolledInput } from '../input/uncontrolled-input';
 import { UncontrolledSelect } from '../select/uncontrolled-select';
 import { RouterPage } from '../../router.tsx';
-import { addNewForm } from '../../store/slice.ts';
+import { addNewForm, setFormIsNew } from '../../store/slice.ts';
 import { FormFieldsData } from '../../data/form-fields-data.ts';
 import { validationSchema } from '../../utils/validation.util.ts';
 import { ValidationError } from 'yup';
-import { AppFields, IForm, ValidatingFormData } from '../../types.ts';
+import { AppFields, IStateForm, ValidatingFormData } from '../../types.ts';
 import { GENDERS } from '../../data/common.ts';
+import { v4 as uuidv4 } from 'uuid';
 
 export const UncontrolledForm = () => {
   const navigate = useNavigate();
@@ -66,7 +67,9 @@ export const UncontrolledForm = () => {
     }
 
     if (isValid && validatedData) {
-      const validatedForm: IForm = {
+      const validatedForm: IStateForm = {
+        id: uuidv4(),
+        isNew: true,
         name: validatedData.name,
         email: validatedData.email,
         age: validatedData.age,
@@ -80,6 +83,14 @@ export const UncontrolledForm = () => {
         acceptTC: validatedData.acceptTC ?? true,
       };
       dispatch(addNewForm(validatedForm));
+      setTimeout(() => {
+        dispatch(
+          setFormIsNew({
+            ...validatedForm,
+            isNew: false,
+          })
+        );
+      }, 5000);
       setErrors({});
       navigate(RouterPage.MAIN);
     } else {
@@ -91,49 +102,49 @@ export const UncontrolledForm = () => {
     <form className="form" autoComplete="on" onSubmit={handleSubmit}>
       <UncontrolledInput
         {...FormFieldsData.name}
-        ref={nameRef}
+        fieldRef={nameRef}
         error={errors['name']}
       />
       <UncontrolledInput
         {...FormFieldsData.email}
-        ref={emailRef}
+        fieldRef={emailRef}
         error={errors['email']}
       />
       <UncontrolledInput
         {...FormFieldsData.age}
-        ref={ageRef}
+        fieldRef={ageRef}
         error={errors['age']}
       />
       <UncontrolledSelect
         {...FormFieldsData.gender}
         data={GENDERS}
-        ref={genderRef}
+        fieldRef={genderRef}
         error={errors['gender']}
       />
       <UncontrolledInput
         {...FormFieldsData.password}
-        ref={passwordRef}
+        fieldRef={passwordRef}
         error={errors['password']}
       />
       <UncontrolledInput
         {...FormFieldsData.passwordRepeat}
-        ref={passwordRepeatRef}
+        fieldRef={passwordRepeatRef}
         error={errors['passwordRepeat']}
       />
       <UncontrolledSelect
         {...FormFieldsData.countries}
         data={countries}
-        ref={countryRef}
+        fieldRef={countryRef}
         error={errors['country']}
       />
       <UncontrolledInput
         {...FormFieldsData.img}
-        ref={imgRef}
+        fieldRef={imgRef}
         error={errors['img']}
       />
       <UncontrolledCheckbox
         {...FormFieldsData.acceptTC}
-        ref={acceptTCRef}
+        fieldRef={acceptTCRef}
         error={errors['acceptTC']}
       />
 

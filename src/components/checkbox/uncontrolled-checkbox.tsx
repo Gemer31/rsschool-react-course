@@ -7,14 +7,14 @@ export const UncontrolledCheckbox = ({
   label,
   placeholder,
   error,
-  ref,
+  fieldRef,
 }: UncontrolledFieldProps) => {
   return (
     <div className="checkbox">
       <div className="checkbox-field">
         <input
           id={id}
-          ref={ref}
+          ref={fieldRef}
           className="checkbox-input"
           type={type}
           name={name}

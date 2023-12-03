@@ -1,14 +1,13 @@
-import { IForm } from '../../types.ts';
+import { IStateForm } from '../../types.ts';
 import classes from './form-card.module.scss';
 
 interface IFormCardProps {
-  data: IForm;
-  index: number;
+  data: IStateForm;
 }
-export const FormCard = ({ data, index }: IFormCardProps) => {
+export const FormCard = ({ data }: IFormCardProps) => {
   return (
-    <div key={index} className={classes.formCard}>
-      {index === 0 && <span className={classes.formCard__label}>New</span>}
+    <div className={classes.formCard}>
+      {data.isNew && <span className={classes.formCard__label}>New</span>}
       <img className={classes.formCard__img} src={data.img} alt={data.name} />
       <div className={classes.formCardContent}>
         <p>

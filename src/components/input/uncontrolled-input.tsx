@@ -7,7 +7,7 @@ export const UncontrolledInput = ({
   label,
   placeholder,
   error,
-  ref,
+  fieldRef,
 }: UncontrolledFieldProps) => {
   return (
     <div className="input">
@@ -23,7 +23,7 @@ export const UncontrolledInput = ({
           name={name}
           autoComplete="on"
           id={id}
-          ref={ref}
+          ref={fieldRef}
           placeholder={placeholder}
         />
         {type === 'checkbox' && (

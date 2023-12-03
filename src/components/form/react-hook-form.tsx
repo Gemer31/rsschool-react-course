@@ -3,15 +3,16 @@ import { useAppDispatch, useAppSelector } from '../../store/redux-hooks.ts';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validationSchema } from '../../utils/validation.util.ts';
-import { AppFields, IForm } from '../../types.ts';
+import { AppFields, IStateForm } from '../../types.ts';
 import { RouterPage } from '../../router.tsx';
 import { convertToBase64Util } from '../../utils/convert-to-base64.util.ts';
-import { addNewForm } from '../../store/slice.ts';
+import { addNewForm, setFormIsNew } from '../../store/slice.ts';
 import { ReactHookFormSelect } from '../select/react-hook-form-select.tsx';
 import { GENDERS } from '../../data/common.ts';
 import { ReactHookFormCheckbox } from '../checkbox/react-hook-form-checkbox.tsx';
 import { ReactHookFormInput } from '../input/react-hook-form-input.tsx';
 import { FormFieldsData } from '../../data/form-fields-data.ts';
+import { v4 as uuidv4 } from 'uuid';
 
 export const ReactHookForm = () => {
   const navigate = useNavigate();
@@ -32,7 +33,9 @@ export const ReactHookForm = () => {
       ? await convertToBase64Util(formData.img[0])
       : '';
 
-    const validatedForm: IForm = {
+    const validatedForm: IStateForm = {
+      id: uuidv4(),
+      isNew: true,
       name: formData.name,
       email: formData.email,
       age: formData.age,
@@ -44,6 +47,14 @@ export const ReactHookForm = () => {
       acceptTC: formData.acceptTC ?? true,
     };
     dispatch(addNewForm(validatedForm));
+    setTimeout(() => {
+      dispatch(
+        setFormIsNew({
+          ...validatedForm,
+          isNew: false,
+        })
+      );
+    }, 5000);
     navigate(RouterPage.MAIN);
   };
 

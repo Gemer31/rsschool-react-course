@@ -9,6 +9,10 @@ export type CommonReactProps = {
   children: React.ReactNode;
 };
 
+export interface IStateForm extends IForm {
+  id: string;
+  isNew: boolean;
+}
 export interface IForm {
   name: string;
   age: number;
@@ -68,5 +72,5 @@ export interface ReackHookFieldProps extends CommonFieldProps {
 
 export interface UncontrolledFieldProps extends CommonFieldProps {
   error?: string;
-  ref: RefObject<HTMLInputElement>;
+  fieldRef: RefObject<HTMLInputElement>;
 }
