@@ -1,11 +1,7 @@
-@import "colors";
-@import "vars";
+@import 'colors';
+@import 'vars';
 
 .form {
-  &__passwords {
-    margin: 10px 0 20px;
-  }
-
   &__submit {
     position: relative;
     width: 100%;
@@ -26,35 +22,34 @@
 
 .input {
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: $size-l;
 
-  &__content {
+  &-field {
     display: flex;
     flex-direction: column;
   }
 
-  &__label {
-    font-size: 13px;
+  &-label {
+    font-size: $size-m;
     line-height: $size-l;
     cursor: pointer;
 
     &::after {
       content: '*';
       margin-left: $size-xxs;
-      font-size: 16px;
-      font-weight: 600;
+      font-size: $size-m;
+      font-weight: bold;
       color: red;
     }
   }
 
-  &__input {
-    padding: 10px 12px;
+  &-input {
+    padding: $size-common $size-common;
     border-radius: $size-xs;
-    border: 1.5px solid;
-    border-color: $gray-1;
+    border: $size-xxs solid $gray-1;
 
     &.error {
-      border-color: red;
+      border: $size-xxs solid red;
     }
   }
 
@@ -62,35 +57,34 @@
     padding-top: $size-xxs;
     margin: 0;
     position: absolute;
-    font-size: 13px;
+    font-size: $size-m;
     color: red;
-    font-weight: 600;
-    line-height: 1;
+    font-weight: bold;
   }
 }
 
 .checkbox {
-  margin-bottom: 10px;
+  margin-bottom: $size-common;
 
-  &__content {
+  &-field {
     display: flex;
   }
 
-  &__label {
-    font-size: 13px;
+  &-label {
+    font-size: $size-m;
     cursor: pointer;
 
     &::after {
       content: '*';
       margin-left: $size-xxs;
-      font-size: 16px;
-      font-weight: 600;
+      font-size: $size-m;
+      font-weight: bold;
       color: red;
     }
   }
 
-  &__input {
-    margin-right: 5px;
+  &-input {
+    margin-right: $size-s;
     cursor: pointer;
   }
 }
@@ -98,5 +92,5 @@
 .select {
   padding: $size-s;
   border-radius: $size-xs;
-  border: 1.5px solid #d8d6de;
+  border: $size-xxs solid white;
 }

@@ -1,6 +1,6 @@
-@import "../../styles/colors";
-@import "../../styles/form";
-@import "../../styles/vars";
+@import '../../styles/colors';
+@import '../../styles/form';
+@import '../../styles/vars';
 
 .formCard {
   background: white;
@@ -28,9 +28,7 @@
     padding: $size-s $size-s $size-m;
   }
 
-  & p {
-    & span {
-      font-weight: 600;
-    }
+  & p span {
+    font-weight: bold;
   }
 }

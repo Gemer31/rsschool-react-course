@@ -1,13 +1,18 @@
-import { RHKInputProps } from "../../types.ts";
+import { ReackHookFieldProps } from '../../types.ts';
 
-interface RHKSelectProps extends RHKInputProps {
+interface IReactHookFormSelectProps extends ReackHookFieldProps {
   data: string[];
 }
 
-export const RHKSelect = (props: RHKSelectProps) => {
-  const { id, label, placeholder, data, inputKey, error, register } = props;
-
-
+export const ReactHookFormSelect = ({
+  id,
+  label,
+  placeholder,
+  data,
+  formKey,
+  error,
+  register,
+}: IReactHookFormSelectProps) => {
   return (
     <div className="input">
       <div className="input__content">
@@ -20,7 +25,7 @@ export const RHKSelect = (props: RHKSelectProps) => {
           id={id}
           placeholder={placeholder}
           autoComplete="on"
-          {...register(inputKey)}
+          {...register(formKey)}
         />
         <datalist id={`${id}-browsers`}>
           {data.map((item) => (

@@ -1,17 +1,17 @@
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../store/redux-hooks.ts";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { validationSchema } from "../../utils/validation.ts";
-import { RHKInput } from "../input/rhk-input.tsx";
-import { AppFields, IForm } from "../../types.ts";
-import { RouterPage } from "../../utils/router.tsx";
-import { fileReader } from "../../utils/file-reader.ts";
-import { FormFieldsData } from "../../data/form-fields-data.ts";
-import { addNewForm } from "../../store/slice.ts";
-import { RHKSelect } from "../select/rhk-select.tsx";
-import { GENDERS } from "../../data/common.ts";
-import { RHKCheckbox } from "../checkbox/rhk-checkbox.tsx";
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store/redux-hooks.ts';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { validationSchema } from '../../utils/validation.util.ts';
+import { AppFields, IForm } from '../../types.ts';
+import { RouterPage } from '../../router.tsx';
+import { convertToBase64Util } from '../../utils/convert-to-base64.util.ts';
+import { addNewForm } from '../../store/slice.ts';
+import { ReactHookFormSelect } from '../select/react-hook-form-select.tsx';
+import { GENDERS } from '../../data/common.ts';
+import { ReactHookFormCheckbox } from '../checkbox/react-hook-form-checkbox.tsx';
+import { ReactHookFormInput } from '../input/react-hook-form-input.tsx';
+import { FormFieldsData } from '../../data/form-fields-data.ts';
 
 export const ReactHookForm = () => {
   const navigate = useNavigate();
@@ -28,7 +28,9 @@ export const ReactHookForm = () => {
   });
 
   const onSubmitForm = async (formData: AppFields) => {
-    const readerImage = formData.img ? await fileReader(formData.img[0]) : '';
+    const readerImage = formData.img
+      ? await convertToBase64Util(formData.img[0])
+      : '';
 
     const validatedForm: IForm = {
       name: formData.name,
@@ -51,62 +53,56 @@ export const ReactHookForm = () => {
       autoComplete="on"
       onSubmit={handleSubmit(onSubmitForm)}
     >
-      <RHKInput
+      <ReactHookFormInput
         {...FormFieldsData.name}
         register={register}
         error={errors.name}
       />
-      <RHKInput
+      <ReactHookFormInput
         {...FormFieldsData.email}
         register={register}
         error={errors.email}
       />
 
-      <div className="form-wrapper">
-        <RHKInput
-          {...FormFieldsData.age}
-          register={register}
-          error={errors.age}
-        />
-        <RHKSelect
-          {...FormFieldsData.gender}
-          data={GENDERS}
-          register={register}
-          error={errors.gender}
-        />
-      </div>
-
-      <div className="form__passwords">
-        <RHKInput
-          {...FormFieldsData.password}
-          register={register}
-          error={errors.password}
-        />
-        <RHKInput
-          {...FormFieldsData.passwordRepeat}
-          register={register}
-          error={errors.passwordRepeat}
-        />
-      </div>
-
-      <RHKSelect
+      <ReactHookFormInput
+        {...FormFieldsData.age}
+        register={register}
+        error={errors.age}
+      />
+      <ReactHookFormSelect
+        {...FormFieldsData.gender}
+        data={GENDERS}
+        register={register}
+        error={errors.gender}
+      />
+      <ReactHookFormInput
+        {...FormFieldsData.password}
+        register={register}
+        error={errors.password}
+      />
+      <ReactHookFormInput
+        {...FormFieldsData.passwordRepeat}
+        register={register}
+        error={errors.passwordRepeat}
+      />
+      <ReactHookFormSelect
         {...FormFieldsData.countries}
         data={countries}
         register={register}
         error={errors['country']}
       />
-      <RHKInput
+      <ReactHookFormInput
         {...FormFieldsData.img}
         register={register}
         error={errors.img}
       />
-      <RHKCheckbox
+      <ReactHookFormCheckbox
         {...FormFieldsData.acceptTC}
         register={register}
         error={errors['acceptTC']}
       />
 
-      <input type="submit" className="form__submit"/>
+      <input type="submit" className="form__submit" />
     </form>
   );
 };

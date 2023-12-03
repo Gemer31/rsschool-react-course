@@ -1,9 +1,9 @@
-import { RouteObject } from "react-router-dom";
-import { Layout } from "../components/layout.tsx";
-import { MainPage } from "../pages/main-page.tsx";
-import { UncontrolledFormPage } from "../pages/uncontrolled-form-page.tsx";
-import { ReactHookFormPage } from "../pages/react-hook-form-page.tsx";
-import { NotFoundPage } from "../pages/not-found-page.tsx";
+import { RouteObject } from 'react-router-dom';
+import { Layout } from './components/layout.tsx';
+import { MainPage } from './pages/main-page.tsx';
+import { UncontrolledFormPage } from './pages/uncontrolled-form-page.tsx';
+import { ReactHookFormPage } from './pages/react-hook-form-page.tsx';
+import { NotFoundPage } from './pages/not-found-page.tsx';
 
 export enum RouterPage {
   MAIN = '/',
@@ -35,4 +35,3 @@ export const routes: RouteObject[] = [
     ],
   },
 ];
-

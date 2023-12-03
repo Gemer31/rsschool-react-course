@@ -1,55 +1,72 @@
-import { FieldError, RegisterOptions, UseFormRegisterReturn } from "react-hook-form";
+import {
+  FieldError,
+  RegisterOptions,
+  UseFormRegisterReturn,
+} from 'react-hook-form';
+import { RefObject } from 'react';
 
 export type CommonReactProps = {
-    children: React.ReactNode,
-}
+  children: React.ReactNode;
+};
 
 export interface IForm {
-    name: string;
-    age: number;
-    email: string;
-    gender: string;
-    password: string;
-    passwordRepeat: string;
-    country: string;
-    img: string;
-    acceptTC: boolean;
+  name: string;
+  age: number;
+  email: string;
+  gender: string;
+  password: string;
+  passwordRepeat: string;
+  country: string;
+  img: string;
+  acceptTC: boolean;
 }
 
 export type AppFields = {
-    name: string;
-    age: number;
-    email: string;
-    gender: string;
-    password: string;
-    passwordRepeat: string;
-    country: string;
-    img?: FileList | undefined;
-    acceptTC?: boolean | undefined;
+  name: string;
+  age: number;
+  email: string;
+  gender: string;
+  password: string;
+  passwordRepeat: string;
+  country: string;
+  img?: FileList | undefined;
+  acceptTC?: boolean | undefined;
 };
 
-export enum RegisterKeys {
-    name = 'name',
-    email = 'email',
-    age = 'age',
-    gender = 'gender',
-    password = 'password',
-    passwordRepeat = 'passwordRepeat',
-    img = 'img',
-    country = 'country',
-    acceptTC = 'acceptTC',
+export enum FormKeys {
+  NAME = 'name',
+  EMAIL = 'email',
+  AGE = 'age',
+  GENDER = 'gender',
+  PASSWORD = 'password',
+  PASSWORD_REPEAT = 'passwordRepeat',
+  IMG = 'img',
+  COUNTRY = 'country',
+  ACCEPT_TC = 'acceptTC',
 }
 
-export interface RHKInputProps {
-    id: string;
-    name: string;
-    type: string;
-    label: string;
-    placeholder: string;
-    inputKey: RegisterKeys;
-    error?: FieldError | undefined;
-    register: (
-        name: RegisterKeys,
-        options?: RegisterOptions<AppFields, RegisterKeys> | undefined,
-    ) => UseFormRegisterReturn<RegisterKeys>;
+export interface ValidatingFormData {
+  [key: string]: string | number | boolean | undefined | null | FileList;
+}
+
+export interface CommonFieldProps {
+  id: string;
+  name: string;
+  type: string;
+  label: string;
+  placeholder: string;
+}
+
+export interface ReackHookFieldProps extends CommonFieldProps {
+  formKey: FormKeys;
+  error?: FieldError | undefined;
+  register: (
+    name: FormKeys,
+    options?: RegisterOptions<AppFields, FormKeys> | undefined
+  ) => UseFormRegisterReturn<FormKeys>;
+}
+
+export interface UncontrolledFieldProps extends CommonFieldProps {
+  error?: string;
+  ref: RefObject<HTMLInputElement>;
 }

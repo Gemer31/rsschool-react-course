@@ -1,7 +1,7 @@
 @import 'normalize.css';
-@import "colors";
-@import "form";
-@import "vars";
+@import 'colors';
+@import 'form';
+@import 'vars';
 
 html,
 body {
@@ -34,11 +34,12 @@ h1 {
   margin: 0;
 }
 
-
-.no-forms {
+.no-data {
+  display: flex;
+  justify-content: center;
   margin-top: $size-m;
   padding: $size-m;
-  border-radius: 16px;
+  border-radius: $size-m;
   background: white;
 }
 
@@ -50,6 +51,3 @@ h1 {
   grid-template-columns: repeat(4, 1fr);
   gap: $size-m;
 }
-
-
-

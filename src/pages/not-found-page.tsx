@@ -1,3 +1,7 @@
 export const NotFoundPage = () => {
-  return <>Nothing found</>;
+  return (
+    <section>
+      <div className="no-data">No such page</div>
+    </section>
+  );
 };

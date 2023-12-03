@@ -1,32 +1,26 @@
-import { RefObject } from 'react';
+import { UncontrolledFieldProps } from '../../types.ts';
 
-interface FormInputProps {
-  name: string;
-  id: string;
-  label: string;
-  placeholder: string;
+interface FormInputProps extends UncontrolledFieldProps {
   data: string[];
-  error?: string;
-  inputRef: RefObject<HTMLInputElement>;
 }
 
 export const UncontrolledSelect = (props: FormInputProps) => {
-  const { name, id, label, placeholder, data, error, inputRef } = props;
+  const { name, id, label, placeholder, data, error, ref } = props;
 
   return (
     <div className="input">
-      <div className="input__content">
-        <label className="input__label" htmlFor={id}>
+      <div className="input-content">
+        <label className="input-label" htmlFor={id}>
           {label}
         </label>
         <input
-          className={`input__input ${error ? 'error' : ''}`}
-          list={`${id}-browsers`}
           id={id}
+          ref={ref}
+          className={`input-input ${error ? 'error' : ''}`}
+          list={`${id}-browsers`}
           name={name}
           placeholder={placeholder}
           autoComplete="on"
-          ref={inputRef}
         />
         <datalist id={`${id}-browsers`}>
           {data.map((item) => (
@@ -36,7 +30,7 @@ export const UncontrolledSelect = (props: FormInputProps) => {
           ))}
         </datalist>
       </div>
-      {error && <p className="input__error">{error}</p>}
+      {error && <p className="input-error">{error}</p>}
     </div>
   );
 };

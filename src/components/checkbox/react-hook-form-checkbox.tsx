@@ -1,32 +1,29 @@
-import { UncontrolledFieldProps } from '../../types.ts';
+import { ReackHookFieldProps } from '../../types';
 
-export const UncontrolledCheckbox = ({
-  name,
+export const ReactHookFormCheckbox = ({
   type,
   id,
   label,
   placeholder,
+  formKey,
   error,
-  ref,
-}: UncontrolledFieldProps) => {
+  register,
+}: ReackHookFieldProps) => {
   return (
     <div className="checkbox">
       <div className="checkbox-field">
         <input
           id={id}
-          ref={ref}
           className="checkbox-input"
           type={type}
-          name={name}
           placeholder={placeholder}
-          autoComplete="on"
+          {...register(formKey)}
         />
-
         <label htmlFor={id} className="checkbox-label">
           {label}
         </label>
       </div>
-      {error && <p className="input-error">{error}</p>}
+      {error && <p className="input-error">{error.message}</p>}
     </div>
   );
 };
